@@ -9,6 +9,14 @@ Source0:	ftp://ftp.mysql.com/pub/mysql/download/%{name}-%{version}beta.tar.gz
 URL:		http://forge.mysql.com/wiki/index.php/MySQL_Workbench
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	gettext-devel
+BuildRequires:	gtkhtml-devel >= 3.6.0
+BuildRequires:	gtkmm-devel >= 2.4.0
+BuildRequires:	libglade2-devel >= 1:2.0.0
+BuildRequires:	libgtkhtml-devel
+BuildRequires:	mysql-devel
+BuildRequires:	pkgconfig
+BuildRequires:	popt-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
