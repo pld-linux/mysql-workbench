@@ -1,4 +1,5 @@
 Summary:	A database modeling tool for MySQL
+Summary(pl):	Narzêdzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	1.0.5
 Release:	0.beta.1
@@ -24,6 +25,12 @@ MySQL Workbench is a database modeling tool for MySQL. You can use it
 to design and create new database schemas, document existing databases
 and even perform complex migrations to MySQL.
 
+%description -l pl
+MySQL Workbench to narzêdzie do modelowania baz danych dla MySQL-a.
+Mo¿na u¿ywaæ go do projektowania i tworzenia schematów nowych baz
+danych, dokumentowania istniej±cych baz danych, a nawet wykonywania
+skomplikowanych migracji do MySQL-a.
+
 %prep
 %setup -q -n %{name}-%{version}beta
 
@@ -31,6 +38,7 @@ and even perform complex migrations to MySQL.
 export PKG_CONFIG=pkg-config
 # first we have to build the common libs
 cd mysql-gui-common
+# XXX: aren't config.* copied by automake?
 install /usr/share/automake/config.* .
 %{__aclocal}
 %{__autoconf}
