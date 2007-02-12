@@ -1,5 +1,5 @@
 Summary:	A database modeling tool for MySQL
-Summary(pl):	Narzêdzie do modelowania baz danych dla MySQL-a
+Summary(pl.UTF-8):   NarzÄ™dzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	1.0.5
 Release:	0.beta.1
@@ -25,10 +25,10 @@ MySQL Workbench is a database modeling tool for MySQL. You can use it
 to design and create new database schemas, document existing databases
 and even perform complex migrations to MySQL.
 
-%description -l pl
-MySQL Workbench to narzêdzie do modelowania baz danych dla MySQL-a.
-Mo¿na u¿ywaæ go do projektowania i tworzenia schematów nowych baz
-danych, dokumentowania istniej±cych baz danych, a nawet wykonywania
+%description -l pl.UTF-8
+MySQL Workbench to narzÄ™dzie do modelowania baz danych dla MySQL-a.
+MoÅ¼na uÅ¼ywaÄ‡ go do projektowania i tworzenia schematÃ³w nowych baz
+danych, dokumentowania istniejÄ…cych baz danych, a nawet wykonywania
 skomplikowanych migracji do MySQL-a.
 
 %prep
