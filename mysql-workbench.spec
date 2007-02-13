@@ -1,5 +1,5 @@
 Summary:	A database modeling tool for MySQL
-Summary(pl.UTF-8):   Narzędzie do modelowania baz danych dla MySQL-a
+Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	1.0.5
 Release:	0.beta.1
