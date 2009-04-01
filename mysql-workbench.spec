@@ -4,16 +4,18 @@
 #   ** Message: WARNING: Could not load wb.mysql.import.grt.so: Cannot open /usr/lib64/mysql-workbench/modules/wb.mysql.import.grt.so
 # - runs but not tested at all
 # - what with mysql-workbench from mysql-gui-tools.spec?
-%define	subver	alpha
+# - doesn't build, -Wl,--as-needed problem,
+#   with %%define filterout_ld -Wl,--as-needed builds fine
+
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.1.4
-Release:	0.%{subver}.1
+Version:	5.1.9
+Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases
-Source0:	ftp://ftp.mysql.com/pub/mysql/download/gui-tools/%{name}-%{version}%{subver}.tar.gz
-# Source0-md5:	5cb8543f3263aabf6c57831f8a3b98c9
+Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-oss-%{version}.tar.gz
+# Source0-md5:	4a18e49feea11a15a1956f890dccb406
 Patch0:		%{name}-desktop.patch
 URL:		http://dev.mysql.com/workbench/
 BuildRequires:	OpenGL-devel
@@ -32,6 +34,7 @@ BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
 BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
+BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -46,7 +49,7 @@ danych, dokumentowania istniejących baz danych, a nawet wykonywania
 skomplikowanych migracji do MySQL-a.
 
 %prep
-%setup -q -n %{name}-%{version}%{subver}
+%setup -q -n %{name}-oss-%{version}
 %patch0 -p1
 %{__sed} -i -e 's#/lib/#/%{_lib}/#g' frontend/linux/workbench/%{name}
 %{__sed} -i -e 's#!/bin/bash#!/bin/sh#g' frontend/linux/workbench/%{name}
