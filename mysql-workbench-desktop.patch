@@ -1,19 +1,14 @@
---- mysql-workbench-5.1.4alpha/MySQLWorkbench.desktop.in	2008-11-06 21:40:38.000000000 +0000
-+++ mysql-workbench-5.1.4alpha/MySQLWorkbench.desktop.in	2008-11-09 20:55:50.000000000 +0000
+--- mysql-workbench-oss-5.1.9/MySQLWorkbench.desktop.in	2009-03-20 13:40:26.000000000 +0000
++++ mysql-workbench-oss-5.1.9/MySQLWorkbench.desktop.in	2009-04-01 19:30:48.000000000 +0000
 @@ -1,8 +1,8 @@
--[Desktop Entry]
--Name=MySQL Workbench
--Comment=MySQL Database Design Tool
+ [Desktop Entry]
+ Name=MySQL Workbench
+ Comment=MySQL Database Design Tool
 -Exec=#bindir#/mysql-workbench
--Terminal=false
--Type=Application
++Exec=mysql-workbench
+ Terminal=false
+ Type=Application
 -Icon=#pkgdatadir#/images/MySQLWorkbench-48.png
 -Categories=GTK;Database;Development;Application
-+[Desktop Entry]
-+Name=MySQL Workbench
-+Comment=MySQL Database Design Tool
-+Exec=mysql-workbench
-+Terminal=false
-+Type=Application
 +Icon=mysql-workbench
 +Categories=GTK;Database;Development;
