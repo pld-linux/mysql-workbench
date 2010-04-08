@@ -36,8 +36,12 @@ BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
 BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
+BuildRequires:	readline-devel
 BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# FIXME: fix linking of m/usr/lib{,64}/mysql-workbench/plugins/*.so* modules and then drop this
+%define		filterout_ld	-Wl,--as-needed
 
 %description
 MySQL Workbench is a database modeling tool for MySQL. You can use it
@@ -65,6 +69,7 @@ rm -rf ext/boost
 %{__autoheader}
 %{__automake}
 %configure \
+	--enable-readline \
 	CFLAGS="%{rpmcflags} -Wno-deprecated" \
 	LUA_LIBS="`pkg-config --libs lua51`" \
 	LUA_CFLAGS="`pkg-config --cflags lua51`"
