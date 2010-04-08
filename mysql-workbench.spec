@@ -10,15 +10,15 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.1.16
-Release:	0.1
+Version:	5.1.17
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-oss-%{version}.tar.gz
-# Source0-md5:	e2f4ddea185e6988887d28a62e7cbbb5
+# Source0-md5:	2c7e1adfd100d23dc47295037e0bec68
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-gcc44.patch
-URL:		http://dev.mysql.com/workbench/
+Patch1:		%{name}-build.patch
+URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -52,6 +52,7 @@ skomplikowanych migracji do MySQL-a.
 
 %prep
 %setup -q -n %{name}-oss-%{version}
+%undos MySQLWorkbench.desktop.in
 rm -rf ext/boost
 %patch0 -p1
 %patch1 -p1
