@@ -10,12 +10,12 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.1.18
+Version:	5.2.21
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-oss-%{version}.tar.gz
-# Source0-md5:	f136bac3e808cadda36321ac0e644399
+# Source0-md5:	460fd6f5faee3ef800a2aa2076c22535
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-build.patch
 URL:		http://wb.mysql.com/
@@ -39,9 +39,6 @@ BuildRequires:	pkgconfig
 BuildRequires:	readline-devel
 BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# FIXME: fix linking of m/usr/lib{,64}/mysql-workbench/plugins/*.so* modules and then drop this
-%define		filterout_ld	-Wl,--as-needed
 
 %description
 MySQL Workbench is a database modeling tool for MySQL. You can use it
