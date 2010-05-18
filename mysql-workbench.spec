@@ -10,12 +10,12 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.1.18
-Release:	1
+Version:	5.2.21
+Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-oss-%{version}.tar.gz
-# Source0-md5:	f136bac3e808cadda36321ac0e644399
+# Source0-md5:	460fd6f5faee3ef800a2aa2076c22535
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-build.patch
 URL:		http://wb.mysql.com/
@@ -37,7 +37,8 @@ BuildRequires:	lua51-devel
 BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
 BuildRequires:	readline-devel
-BuildRequires:	unzip
+Requires:	python-paramiko
+Requires:	python-pexpect
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # FIXME: fix linking of m/usr/lib{,64}/mysql-workbench/plugins/*.so* modules and then drop this
@@ -58,6 +59,7 @@ skomplikowanych migracji do MySQL-a.
 %setup -q -n %{name}-oss-%{version}
 %undos MySQLWorkbench.desktop.in
 rm -rf ext/boost
+rm -rf ext/ctemplate
 %patch0 -p1
 %patch1 -p1
 
@@ -70,6 +72,7 @@ rm -rf ext/boost
 %{__automake}
 %configure \
 	--enable-readline \
+	--with-system-ctemplate \
 	CFLAGS="%{rpmcflags} -Wno-deprecated" \
 	LUA_LIBS="`pkg-config --libs lua51`" \
 	LUA_CFLAGS="`pkg-config --cflags lua51`"
@@ -95,7 +98,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-bin
-%attr(755,root,root) %{_bindir}/grtshell
 %{_datadir}/%{name}
 %{_libdir}/%{name}
 %{_desktopdir}/%{name}.desktop
