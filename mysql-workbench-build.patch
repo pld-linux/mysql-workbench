@@ -1,10 +1,29 @@
---- mysql-workbench-oss-5.1.17/library/grt/src/Makefile.am~	2009-08-14 01:09:21.000000000 +0200
-+++ mysql-workbench-oss-5.1.17/library/grt/src/Makefile.am	2010-04-08 13:49:58.694826677 +0200
-@@ -13,6 +13,7 @@
- 	@GRT_CFLAGS@
+--- mysql-workbench-oss-5.2.21/ext/Makefile.am	2010-05-11 13:50:49.000000000 +0000
++++ mysql-workbench-oss-5.2.21/ext/Makefile.am	2010-05-16 22:47:10.000000000 +0000
+@@ -1 +1 @@
+-SUBDIRS=ctemplate scintilla/gtk cppconn
++SUBDIRS=scintilla/gtk cppconn
+--- mysql-workbench-oss-5.2.21/configure.in	2010-05-11 13:51:04.000000000 +0000
++++ mysql-workbench-oss-5.2.21/configure.in	2010-05-16 23:05:44.000000000 +0000
+@@ -524,10 +524,3 @@
  
- libgrt_la_LIBADD=\
-+        @GLIB_LIBS@\
-         @LUA_LIBS@\
-         $(top_srcdir)/library/utilities/src/libguiutil.la
  
+ AC_OUTPUT()
+-
+-(
+-  cd ./ext/ctemplate/ctemplate-src &&
+-  autoreconf -i -s; 
+-  ./configure --prefix=$prefix --libdir=$libdir/mysql-workbench --disable-dependency-tracking --disable-dynamic
+-)    
+-
+--- mysql-workbench-oss-5.2.21/backend/wbprivate/model/canvas_floater.cpp	2010-05-11 13:50:45.000000000 +0000
++++ mysql-workbench-oss-5.2.21/backend/wbprivate/model/canvas_floater.cpp	2010-05-17 00:10:59.000000000 +0000
+@@ -62,7 +62,7 @@
+     _title->set_padding(6, 6);
+     _title->set_font(mdc::FontSpec("helvetica", mdc::SNormal, mdc::WBold));
+     _title->set_color(mdc::Color::Black());
+-    _title->set_text_color(mdc::Color::Color(0.7, 0.7, 0.7));
++    _title->set_text_color(mdc::Color(0.7, 0.7, 0.7));
+     _title->set_rounded(mdc::CTop);
+     add(_title, false, false);
+   }
