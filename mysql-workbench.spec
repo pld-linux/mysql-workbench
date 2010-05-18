@@ -40,6 +40,8 @@ BuildRequires:	readline-devel
 BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		filterout_ld	-Wl,--as-needed
+
 %description
 MySQL Workbench is a database modeling tool for MySQL. You can use it
 to design and create new database schemas, document existing databases
@@ -92,7 +94,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-bin
-%attr(755,root,root) %{_bindir}/grtshell
 %{_datadir}/%{name}
 %{_libdir}/%{name}
 %{_desktopdir}/%{name}.desktop
