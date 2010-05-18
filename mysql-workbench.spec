@@ -38,6 +38,7 @@ BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
 BuildRequires:	readline-devel
 BuildRequires:	unzip
+Requires:	python-paramiko
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		filterout_ld	-Wl,--as-needed
