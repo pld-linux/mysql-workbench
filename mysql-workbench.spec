@@ -37,6 +37,7 @@ BuildRequires:	lua51-devel
 BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
 BuildRequires:	readline-devel
+BuildRequires:	rpmbuild(macros) >= 1.566
 Requires:	python-paramiko
 Requires:	python-pexpect
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -57,7 +58,7 @@ skomplikowanych migracji do MySQL-a.
 
 %prep
 %setup -q -n %{name}-oss-%{version}
-%{__sed} -i -e 's,\r$,,' MySQLWorkbench.desktop.in
+%undos MySQLWorkbench.desktop.in
 rm -rf ext/boost
 rm -rf ext/ctemplate
 %patch0 -p1
