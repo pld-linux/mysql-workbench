@@ -10,12 +10,12 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.2.21
+Version:	5.2.22
 Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-oss-%{version}.tar.gz
-# Source0-md5:	460fd6f5faee3ef800a2aa2076c22535
+# Source0-md5:	2856c040ba859336a9c892ea147b4261
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-build.patch
 URL:		http://wb.mysql.com/
@@ -57,7 +57,7 @@ skomplikowanych migracji do MySQL-a.
 
 %prep
 %setup -q -n %{name}-oss-%{version}
-%undos MySQLWorkbench.desktop.in
+%{__sed} -i -e 's,\r$,,' MySQLWorkbench.desktop.in
 rm -rf ext/boost
 rm -rf ext/ctemplate
 %patch0 -p1
