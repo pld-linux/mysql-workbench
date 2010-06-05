@@ -1,11 +1,5 @@
 # TODO:
-# - something wrong after start:
-#   ** Message: WARNING: Could not open module /usr/lib64/mysql-workbench/modules/wb.mysql.import.grt.so (/usr/lib64/mysql-workbench/modules/wb.mysql.import.grt.so: undefined symbol: _ZN19Mysql_sql_parser_feC1Ev)
-#   ** Message: WARNING: Could not load wb.mysql.import.grt.so: Cannot open /usr/lib64/mysql-workbench/modules/wb.mysql.import.grt.so
-# - runs but not tested at all
 # - what with mysql-workbench from mysql-gui-tools.spec?
-# - doesn't build, -Wl,--as-needed problem,
-#   with %%define filterout_ld -Wl,--as-needed builds fine
 
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
@@ -17,7 +11,9 @@ Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-oss-%{version}.tar.gz
 # Source0-md5:	2856c040ba859336a9c892ea147b4261
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-build.patch
+Patch1:		%{name}-external_ctemplate.patch
+Patch2:		%{name}-as_needed.patch
+Patch3:		%{name}-python_libs.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -42,9 +38,6 @@ Requires:	python-paramiko
 Requires:	python-pexpect
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# FIXME: fix linking of m/usr/lib{,64}/mysql-workbench/plugins/*.so* modules and then drop this
-%define		filterout_ld	-Wl,--as-needed
-
 %description
 MySQL Workbench is a database modeling tool for MySQL. You can use it
 to design and create new database schemas, document existing databases
@@ -63,6 +56,8 @@ rm -rf ext/boost
 rm -rf ext/ctemplate
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %{__glib_gettextize}
