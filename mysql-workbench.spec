@@ -1,6 +1,3 @@
-# TODO:
-# - what with mysql-workbench from mysql-gui-tools.spec?
-
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
@@ -36,6 +33,9 @@ BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(macros) >= 1.566
 Requires:	python-paramiko
 Requires:	python-pexpect
+Obsoletes:	mysql-administrator
+Obsoletes:	mysql-gui-tools
+Obsoletes:	mysql-query-browser
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
