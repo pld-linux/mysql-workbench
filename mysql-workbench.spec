@@ -25,10 +25,12 @@ BuildRequires:	automake
 BuildRequires:	boost-devel
 BuildRequires:	cairo-devel >= 1.3.12
 BuildRequires:	ctemplate-devel
+BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
 BuildRequires:	gtkmm-devel >= 2.4
 BuildRequires:	libglade2-devel
 BuildRequires:	libgnome-devel >= 2.0
+BuildRequires:	libgnome-keyring-devel
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
@@ -36,7 +38,9 @@ BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
 BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
+BuildRequires:	python-devel
 BuildRequires:	readline-devel
+BuildRequires:	sqlite3-devel
 BuildRequires:	unzip
 Requires:	python-paramiko
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
