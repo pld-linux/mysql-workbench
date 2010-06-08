@@ -34,6 +34,7 @@ BuildRequires:	rpmbuild(macros) >= 1.566
 Requires:	python-paramiko
 Requires:	python-pexpect
 Requires:	python-sqlite
+Suggests:	gnome-keyring
 Suggests:	sudo
 Obsoletes:	mysql-administrator
 Obsoletes:	mysql-gui-tools
