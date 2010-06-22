@@ -1,15 +1,14 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.2.22
+Version:	5.2.24
 Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases
-Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-oss-%{version}.tar.gz
-# Source0-md5:	2856c040ba859336a9c892ea147b4261
+Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-ce-%{version}.tar.gz
+# Source0-md5:	4815cefb03205c99e4c5d66b8b3b1ed4
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-external_ctemplate.patch
-Patch2:		%{name}-python_libs.patch
+Patch1:		%{name}-python_libs.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -52,13 +51,11 @@ danych, dokumentowania istniejących baz danych, a nawet wykonywania
 skomplikowanych migracji do MySQL-a.
 
 %prep
-%setup -q -n %{name}-oss-%{version}
+%setup -q -n %{name}-ce-%{version}
 %undos MySQLWorkbench.desktop.in
 rm -rf ext/boost
-rm -rf ext/ctemplate
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__glib_gettextize}
@@ -69,7 +66,6 @@ rm -rf ext/ctemplate
 %{__automake}
 %configure \
 	--enable-readline \
-	--with-system-ctemplate \
 	CFLAGS="%{rpmcflags} -Wno-deprecated" \
 	LUA_LIBS="`pkg-config --libs lua51`" \
 	LUA_CFLAGS="`pkg-config --cflags lua51`"
