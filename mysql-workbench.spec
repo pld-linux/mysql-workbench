@@ -1,12 +1,12 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.2.24
-Release:	0.2
+Version:	5.2.25
+Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases
-Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-ce-%{version}.tar.gz
-# Source0-md5:	4815cefb03205c99e4c5d66b8b3b1ed4
+Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}.tar.gz
+# Source0-md5:	b4b6632f3f7e150fcbdd3ef06e1dda58
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-python_libs.patch
 Patch2:		%{name}-replace_gnome_url_show_by_xdg-open.patch
@@ -33,6 +33,7 @@ BuildRequires:	rpmbuild(macros) >= 1.566
 Requires:	python-paramiko
 Requires:	python-pexpect
 Requires:	python-sqlite
+# Patch2 requires xdg-utils
 Requires:	xdg-utils
 Suggests:	gnome-keyring
 Suggests:	sudo
@@ -53,7 +54,7 @@ danych, dokumentowania istniejących baz danych, a nawet wykonywania
 skomplikowanych migracji do MySQL-a.
 
 %prep
-%setup -q -n %{name}-ce-%{version}
+%setup -q -n %{name}-gpl-%{version}
 %undos MySQLWorkbench.desktop.in
 rm -rf ext/boost
 %patch0 -p1
