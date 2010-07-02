@@ -1,0 +1,22 @@
+--- mysql-workbench-ce-5.2.24/frontend/linux/linux_utilities/gtk_helpers.cpp	2010-06-19 02:40:15.000000000 +0000
++++ mysql-workbench-ce-5.2.24/frontend/linux/linux_utilities/gtk_helpers.cpp	2010-06-26 14:07:16.000000000 +0000
+@@ -44,11 +44,14 @@
+ //------------------------------------------------------------------------------
+ void open_url(const std::string &url)
+ {
+-#ifdef HAVE_LIBGNOME
+-  gnome_url_show(url.c_str(), NULL);
+-#else
+-  g_message("Open URL %s (no url handler)", url.c_str());
+-#endif
++  if (g_find_program_in_path ("xdg-open")) {
++    char *argv[] = {(char*)"xdg-open", (char*)url.c_str(), NULL, NULL};
++    if (!g_spawn_async(NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, NULL)) {
++      g_warning("Open URL %s with xdg-open failed", url.c_str());
++    }
++  } else {
++    g_warning("Open URL %s (no url handler)", url.c_str());
++  }                                        
+ }
+ 
+ //------------------------------------------------------------------------------
