@@ -1,23 +1,15 @@
-# TODO:
-# - something wrong after start:
-#   ** Message: WARNING: Could not open module /usr/lib64/mysql-workbench/modules/wb.mysql.import.grt.so (/usr/lib64/mysql-workbench/modules/wb.mysql.import.grt.so: undefined symbol: _ZN19Mysql_sql_parser_feC1Ev)
-#   ** Message: WARNING: Could not load wb.mysql.import.grt.so: Cannot open /usr/lib64/mysql-workbench/modules/wb.mysql.import.grt.so
-# - runs but not tested at all
-# - what with mysql-workbench from mysql-gui-tools.spec?
-# - doesn't build, -Wl,--as-needed problem,
-#   with %%define filterout_ld -Wl,--as-needed builds fine
-
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.2.21
-Release:	2
+Version:	5.2.25
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
-Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-oss-%{version}.tar.gz
-# Source0-md5:	460fd6f5faee3ef800a2aa2076c22535
+Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}.tar.gz
+# Source0-md5:	b4b6632f3f7e150fcbdd3ef06e1dda58
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-build.patch
+Patch1:		%{name}-python_libs.patch
+Patch2:		%{name}-replace_gnome_url_show_by_xdg-open.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -40,12 +32,19 @@ BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 BuildRequires:	readline-devel
+BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sqlite3-devel
-BuildRequires:	unzip
 Requires:	python-paramiko
+Requires:	python-pexpect
+Requires:	python-sqlite
+# Patch2 requires xdg-utils
+Requires:	xdg-utils
+Suggests:	gnome-keyring
+Suggests:	sudo
+Obsoletes:	mysql-administrator
+Obsoletes:	mysql-gui-tools
+Obsoletes:	mysql-query-browser
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		filterout_ld	-Wl,--as-needed
 
 %description
 MySQL Workbench is a database modeling tool for MySQL. You can use it
@@ -59,11 +58,12 @@ danych, dokumentowania istniejących baz danych, a nawet wykonywania
 skomplikowanych migracji do MySQL-a.
 
 %prep
-%setup -q -n %{name}-oss-%{version}
+%setup -q -n %{name}-gpl-%{version}
 %undos MySQLWorkbench.desktop.in
 rm -rf ext/boost
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__glib_gettextize}
