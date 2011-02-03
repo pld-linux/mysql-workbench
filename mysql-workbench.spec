@@ -33,6 +33,7 @@ BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 BuildRequires:	readline-devel
+BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sqlite3-devel
 Requires:	python-paramiko
