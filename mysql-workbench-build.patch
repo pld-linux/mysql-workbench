@@ -31,3 +31,14 @@
  
  wb_validation_grt_la_SOURCES=src/register_plugin.cpp\
  	src/wb_module_validation.cpp
+--- mysql-workbench-oss-5.2.21/backend/wbprivate/model/canvas_floater.cpp~	2010-05-11 15:50:45.000000000 +0200
++++ mysql-workbench-oss-5.2.21/backend/wbprivate/model/canvas_floater.cpp	2010-05-18 12:06:16.387985948 +0200
+@@ -62,7 +62,7 @@
+     _title->set_padding(6, 6);
+     _title->set_font(mdc::FontSpec("helvetica", mdc::SNormal, mdc::WBold));
+     _title->set_color(mdc::Color::Black());
+-    _title->set_text_color(mdc::Color::Color(0.7, 0.7, 0.7));
++    _title->set_text_color(mdc::Color(0.7, 0.7, 0.7));
+     _title->set_rounded(mdc::CTop);
+     add(_title, false, false);
+   }

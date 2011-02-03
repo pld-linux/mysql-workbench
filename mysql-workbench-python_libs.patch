@@ -6,10 +6,10 @@ during link.
 http://git.overlays.gentoo.org/gitweb/?p=user/wish.git;a=blob;f=dev-db/mysql-workbench/files/mysql-workbench-5.2.17-python-libs.patch;h=8fb6b71e91b0c5e14bb542e05f2bab1da4dbc60d;hb=6c2a287fc8cd60b3806ec3d5b058a513c4b417b5
 --- mysql-workbench-oss-5.2.22/configure.in	2010-04-02 03:26:27.000000000 +0200
 +++ mysql-workbench-oss-5.2.22/configure.in	2010-04-09 16:06:10.271092660 +0200
-@@ -303,12 +303,7 @@
- dnl 	enable_python=$enableval, enable_python=no)
- 
- AC_MSG_CHECKING(for Python)
+@@ -280,12 +280,7 @@
+ AC_CHECK_PROG(PYTHON27, python2.7, [yes])
+ # Python headers
+ AC_MSG_CHECKING(for Python libraries)
 -PYTHON_LIBS=[$(python -c "from distutils import sysconfig
 -import os 
 -cfg=sysconfig.get_config_vars()
@@ -20,3 +20,4 @@ http://git.overlays.gentoo.org/gitweb/?p=user/wish.git;a=blob;f=dev-db/mysql-wor
  PYTHON_CFLAGS=[$(python -c "from distutils import sysconfig
  print sysconfig.get_python_inc()")]
  PYTHON_CFLAGS="-I$PYTHON_CFLAGS"
+

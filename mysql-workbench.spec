@@ -1,15 +1,16 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.2.29
-Release:	2
+Version:	5.2.31
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
-# Source0-md5:	80f379871c5cd8cc04673d5e3edda173
+# Source0-md5:	3021ce9802a90956ac5bcd4145dedb1e
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-python_libs.patch
 Patch2:		%{name}-replace_gnome_url_show_by_xdg-open.patch
+Patch3:		mysql-workbench-5.2.30-mysql55.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -46,6 +47,9 @@ Obsoletes:	mysql-gui-tools
 Obsoletes:	mysql-query-browser
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# too broken
+%define		no_install_post_check_so	1
+
 %description
 MySQL Workbench is a database modeling tool for MySQL. You can use it
 to design and create new database schemas, document existing databases
@@ -60,10 +64,18 @@ skomplikowanych migracji do MySQL-a.
 %prep
 %setup -q -n %{name}-gpl-%{version}-src
 %undos MySQLWorkbench.desktop.in
+# we use System provided libraries
 rm -rf ext/boost
+rm -rf ext/curl
+rm -rf ext/libsigc++
+rm -rf ext/yassl
+# rm -rf ext/cppconn
+# rm -rf ext/ctemplate
+# rm -rf library/tinyxml
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__glib_gettextize}
