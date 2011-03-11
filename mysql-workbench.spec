@@ -1,16 +1,15 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.2.31
+Version:	5.2.33
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
-# Source0-md5:	3021ce9802a90956ac5bcd4145dedb1e
+# Source0-md5:	d97a1512c8c8ad54ae83441f8ea5c4b8
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-python_libs.patch
 Patch2:		%{name}-replace_gnome_url_show_by_xdg-open.patch
-Patch3:		mysql-workbench-5.2.30-mysql55.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -76,7 +75,6 @@ rm -rf ext/yassl
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %{__glib_gettextize}
@@ -87,7 +85,7 @@ rm -rf ext/yassl
 %{__automake}
 %configure \
 	--enable-readline \
-	CFLAGS="%{rpmcflags} -Wno-deprecated" \
+	CFLAGS="%{rpmcppflags} %{rpmcflags} -Wno-deprecated" \
 	LUA_LIBS="`pkg-config --libs lua51`" \
 	LUA_CFLAGS="`pkg-config --cflags lua51`"
 
