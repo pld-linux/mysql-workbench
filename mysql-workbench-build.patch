@@ -1,44 +1,13 @@
---- mysql-workbench-oss-5.1.17/modules/wb.model/Makefile.am~	2009-08-14 01:09:22.000000000 +0200
-+++ mysql-workbench-oss-5.1.17/modules/wb.model/Makefile.am	2010-04-08 17:03:37.051164523 +0200
-@@ -66,7 +66,7 @@
- 
- 
- wb_model_grt_la_LDFLAGS=-module
--#wb_model_grt_la_LIBADD=$(top_srcdir)/ext/ctemplate
-+wb_model_grt_la_LIBADD=$(top_srcdir)/ext/ctemplate/ctemplate-src/libctemplate_wb.la
- 
- wb_model_grt_la_SOURCES=src/graph_renderer.cpp \
- 	src/reporting.cpp \
---- mysql-workbench-oss-5.1.17/modules/wb.mysql.validation/Makefile.am~	2009-08-14 01:09:22.000000000 +0200
-+++ mysql-workbench-oss-5.1.17/modules/wb.mysql.validation/Makefile.am	2010-04-08 17:05:50.690317559 +0200
-@@ -20,7 +20,7 @@
- 
- 
- wb_mysql_validation_grt_la_LDFLAGS=-module
--#wb_mysql_import_grt_la_LIBADD=$(top_srcdir)
-+wb_mysql_validation_grt_la_LIBADD=$(top_srcdir)/library/grt/src/libgrt.la
- 
- wb_mysql_validation_grt_la_SOURCES=src/register_plugin.cpp\
- 	src/wb_module_validation_mysql.cpp\
---- mysql-workbench-oss-5.1.17//modules/wb.validation/Makefile.am~	2009-08-14 01:09:22.000000000 +0200
-+++ mysql-workbench-oss-5.1.17//modules/wb.validation/Makefile.am	2010-04-08 17:07:03.196977336 +0200
-@@ -19,7 +19,7 @@
- 
- 
- wb_validation_grt_la_LDFLAGS=-module
--#wb_mysql_import_grt_la_LIBADD=$(top_srcdir)/backend/grtdb/libgrtdbbe.la 
-+wb_validation_grt_la_LIBADD=$(top_srcdir)/library/grt/src/libgrt.la
- 
- wb_validation_grt_la_SOURCES=src/register_plugin.cpp\
- 	src/wb_module_validation.cpp
---- mysql-workbench-oss-5.2.21/backend/wbprivate/model/canvas_floater.cpp~	2010-05-11 15:50:45.000000000 +0200
-+++ mysql-workbench-oss-5.2.21/backend/wbprivate/model/canvas_floater.cpp	2010-05-18 12:06:16.387985948 +0200
-@@ -62,7 +62,7 @@
-     _title->set_padding(6, 6);
-     _title->set_font(mdc::FontSpec("helvetica", mdc::SNormal, mdc::WBold));
-     _title->set_color(mdc::Color::Black());
--    _title->set_text_color(mdc::Color::Color(0.7, 0.7, 0.7));
-+    _title->set_text_color(mdc::Color(0.7, 0.7, 0.7));
-     _title->set_rounded(mdc::CTop);
-     add(_title, false, false);
+diff -up mysql-workbench-gpl-5.2.33-src/frontend/linux/linux_utilities/toolbar_manager.cpp.gcc46 mysql-workbench-gpl-5.2.33-src/frontend/linux/linux_utilities/toolbar_manager.cpp
+--- mysql-workbench-gpl-5.2.33-src/frontend/linux/linux_utilities/toolbar_manager.cpp.gcc46	2011-03-23 16:56:16.000000000 +0100
++++ mysql-workbench-gpl-5.2.33-src/frontend/linux/linux_utilities/toolbar_manager.cpp	2011-03-23 17:07:36.000000000 +0100
+@@ -31,7 +31,7 @@ static Gtk::ComboBox *create_color_combo
    }
+ 
+   Glib::RefPtr<Gtk::ListStore> model= Gtk::ListStore::create(*color_combo_columns);
+-  Gtk::ComboBox *combo= new Gtk::ComboBox(model);
++  Gtk::ComboBox *combo= new Gtk::ComboBox((Glib::RefPtr<Gtk::TreeModel> &)model);
+ 
+   combo->pack_start(color_combo_columns->image);
+ 
+
