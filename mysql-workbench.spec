@@ -115,6 +115,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-bin
 %{_datadir}/%{name}
+%{_datadir}/mime-info/mysql-workbench.mime
+%{_datadir}/mime/packages/mysql-workbench.xml
 %{_libdir}/%{name}
+%{_iconsdir}/hicolor/*x*/apps/mysql-workbench.png
+%{_iconsdir}/hicolor/*x*/mimetypes/*.png
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.png
