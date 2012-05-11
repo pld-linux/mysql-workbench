@@ -1,0 +1,10 @@
+--- mysql-workbench-gpl-5.2.38-src/library/dbc/Makefile.am~	2012-02-21 18:53:36.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/library/dbc/Makefile.am	2012-05-11 21:19:03.354697038 +0300
+@@ -1,6 +1,6 @@
+ 
+ pkglib_LTLIBRARIES=libcdbc.la
+-
++pkglib_LDFLAGS = -module -avoid-version
+ 
+ libcdbc_la_SOURCES=\
+ src/driver_manager.cpp\
