@@ -14,6 +14,7 @@ Patch2:		%{name}-posix.patch
 Patch3:		automake.patch
 Patch4:		glib.patch
 Patch5:		pld-profile.patch
+Patch6:		get_local_ip_list.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -84,6 +85,7 @@ rm -rf ext/yassl
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 cp -p '%{SOURCE1}' res/mysql.profiles
 
 %build

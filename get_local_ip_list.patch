@@ -1,0 +1,11 @@
+--- mysql-workbench-gpl-5.2.38-src/./plugins/wb.admin/backend/wb_server_control.py~	2012-02-21 18:53:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/./plugins/wb.admin/backend/wb_server_control.py	2012-05-11 19:32:38.486191919 +0300
+@@ -32,7 +32,7 @@
+ 
+ #-------------------------------------------------------------------------------
+ def get_local_ip_list():
+-    cmd    = "/bin/sh -c ifconfig"
++    cmd    = "/sbin/ifconfig"
+     regexp = "inet addr:([0-9a-f:\.]+)"
+ 
+     if hasattr(sys, 'getwindowsversion'):
