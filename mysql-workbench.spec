@@ -15,6 +15,7 @@ Patch3:		automake.patch
 Patch4:		glib.patch
 Patch5:		pld-profile.patch
 Patch6:		get_local_ip_list.patch
+Patch7:		log_slow_queries.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -86,6 +87,7 @@ rm -rf ext/yassl
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 cp -p '%{SOURCE1}' res/mysql.profiles
 
 %build
