@@ -2,7 +2,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	5.2.38
-Release:	1.5
+Release:	1.8
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
@@ -17,6 +17,7 @@ Patch5:		pld-profile.patch
 Patch6:		get_local_ip_list.patch
 Patch7:		log_slow_queries.patch
 Patch8:		bashism.patch
+Patch9:		system-cppconn.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -35,6 +36,7 @@ BuildRequires:	libtool
 BuildRequires:	libuuid-devel
 BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
+BuildRequires:	mysql-connector-c++-devel >= 1.1.0
 BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
@@ -73,12 +75,9 @@ skomplikowanych migracji do MySQL-a.
 %setup -q -n %{name}-gpl-%{version}-src
 %undos MySQLWorkbench.desktop.in
 # we use System provided libraries
-rm -r ext/boost
-rm -r ext/curl
-rm -r ext/libsigc++
-rm -r ext/yassl
-# rm -rf ext/cppconn
-# rm -rf ext/ctemplate
+rm -r ext/python/pexpect
+rm -r ext/cppconn
+rm -r ext/ctemplate
 # rm -rf library/tinyxml
 %patch0 -p1
 %patch1 -p1
@@ -89,6 +88,7 @@ rm -r ext/yassl
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 cp -p '%{SOURCE1}' res/mysql.profiles
 
 %build
@@ -114,6 +114,8 @@ rm -rf $RPM_BUILD_ROOT
 	mimeinfodata_DATA= \
 	DESTDIR=$RPM_BUILD_ROOT
 
+find $RPM_BUILD_ROOT%{_libdir}/%{name} -name '*.la'  | xargs rm -v
+
 install -d $RPM_BUILD_ROOT%{_pixmapsdir}
 cp -p images/icons/MySQLWorkbench-128.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 
@@ -133,8 +135,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}-bin
 %{_datadir}/%{name}
 %{_datadir}/mime/packages/mysql-workbench.xml
-%{_libdir}/%{name}
 %{_iconsdir}/hicolor/*x*/apps/mysql-workbench.png
 %{_iconsdir}/hicolor/*x*/mimetypes/*.png
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.png
+
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/*.so*
+%dir %{_libdir}/%{name}/modules
+%{_libdir}/%{name}/modules/*.py
+%{_libdir}/%{name}/modules/*.lua
+%attr(755,root,root) %{_libdir}/%{name}/modules/*.so*
+%dir %{_libdir}/%{name}/plugins
+%attr(755,root,root) %{_libdir}/%{name}/plugins/*.so*

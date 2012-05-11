@@ -1,0 +1,93 @@
+diff -up mysql-workbench-gpl-5.2.28-src/backend/wbprivate/sqlide/wb_sql_editor_form.cpp.cppconn mysql-workbench-gpl-5.2.28-src/backend/wbprivate/sqlide/wb_sql_editor_form.cpp
+--- mysql-workbench-gpl-5.2.28-src/backend/wbprivate/sqlide/wb_sql_editor_form.cpp.cppconn	2010-09-20 19:11:07.100715204 +0200
++++ mysql-workbench-gpl-5.2.28-src/backend/wbprivate/sqlide/wb_sql_editor_form.cpp	2010-09-20 19:11:12.633514446 +0200
+@@ -47,7 +47,7 @@
+ // this doesn't belong here, but there's no other workaround for having access to mysql_info
+ // because of that we also need to link wbprivate directly to the connector, making their
+ // dynamic loading pretty much useless
+-#include <cppconn/../driver/mysql_connection.h>
++#include <mysql_connection.h>
+ 
+ #include "boost_smart_ptr_helpers.h"
+ 
+--- mysql-workbench-gpl-5.2.38-src/configure.in~	2012-05-11 22:40:53.000000000 +0300
++++ mysql-workbench-gpl-5.2.38-src/configure.in	2012-05-11 22:41:05.998432764 +0300
+@@ -425,8 +425,6 @@
+ res/sqlidedata/Makefile
+ ext/Makefile
+ ext/scintilla/gtk/Makefile
+-ext/cppconn/Makefile
+-ext/cppconn/driver/Makefile
+ ext/vsqlite++/Makefile
+ ext/vsqlite++/src/sqlite/Makefile
+ backend/Makefile
+--- mysql-workbench-gpl-5.2.38-src/ext/Makefile.am~	2012-02-21 18:53:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/ext/Makefile.am	2012-05-11 22:41:47.250338170 +0300
+@@ -4,7 +4,7 @@
+ ctemplate_dirs=ctemplate 
+ endif
+ 
+-SUBDIRS=scintilla/gtk cppconn vsqlite++ $(ctemplate_dirs)
++SUBDIRS=scintilla/gtk vsqlite++ $(ctemplate_dirs)
+ 
+ if BUNDLE_UTILITIES
+ all-am:
+diff -up mysql-workbench-gpl-5.2.26/library/dbc/src/driver_manager.cpp.cppconn mysql-workbench-gpl-5.2.26/library/dbc/src/driver_manager.cpp
+--- mysql-workbench-gpl-5.2.26/library/dbc/src/driver_manager.cpp.cppconn	2010-08-05 15:33:19.000000000 +0200
++++ mysql-workbench-gpl-5.2.26/library/dbc/src/driver_manager.cpp	2010-08-07 08:11:56.907643461 +0200
+@@ -145,6 +145,8 @@ TunnelConnection *DriverManager::getTunn
+ ConnectionWrapper DriverManager::getConnection(const db_mgmt_ConnectionRef &connectionProperties, ConnectionInitSlot connection_init_slot)
+ {
+   TunnelConnection* tunnel = NULL;
++  gchar *p = NULL;
++  GModule *gmodule = NULL;
+   // 0. determine correct driver filename
+   
+   db_mgmt_DriverRef drv = connectionProperties->driver();
+@@ -154,21 +156,21 @@ ConnectionWrapper DriverManager::getConn
+     library = drv->driverLibraryName();
+   else
+     throw SQLException("Invalid connection settings: undefined connection driver");
+-#ifdef _WIN32
+-  library.append(".dll");
+-#elif defined(__APPLE__)
+-  library.append(".dylib");
+-#else
+-  library.append(".so");
+-#endif
++
++  // Patch : use library in standard path
++  p = g_module_build_path (NULL, library.c_str());
+ 
+   // 1. find driver
+ 
+-  GModule *gmodule= g_module_open((_driver_path + "/" + library).c_str(), G_MODULE_BIND_LOCAL);
++  if (p) {
++    gmodule = g_module_open(std::string(p).append(".5").c_str(), G_MODULE_BIND_LOCAL);
++    g_free(p);
++  }
++
+   if (NULL == gmodule)
+   {
+     fprintf(stderr, "Error: %s", g_module_error());
+-    throw SQLException(std::string("Database driver: Failed to open library '").append(_driver_path + "/" + library).append("'. Check settings.").c_str());
++    throw SQLException(std::string("Database driver: Failed to open library '").append(library).append("'. Check settings.").c_str());
+   }
+   
+   Driver *(* get_driver_instance)()= NULL;
+--- mysql-workbench-gpl-5.2.38-src/frontend/linux/workbench/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/frontend/linux/workbench/Makefile.am	2012-05-11 22:43:49.509318592 +0300
+@@ -54,12 +54,12 @@
+ 	$(top_srcdir)/library/base/libwbbase.la\
+ 	$(top_srcdir)/library/grt/src/libgrt.la\
+ 	$(top_srcdir)/library/dbc/libcdbc.la\
+-	$(top_srcdir)/ext/cppconn/driver/mysqlcppconn.la\
+ 	$(top_srcdir)/ext/scintilla/gtk/libwbscintilla.la\
+ 	$(top_srcdir)/library/canvas/src/libmdcanvasgtk.la\
+ 	$(top_srcdir)/library/canvas/src/libmdcanvas.la\
+ 	@CTEMPLATE_LIBS@\
+ 	@GNOME_LIBS@ @GRT_LIBS@ @PCRE_LIBS@ @GLIB_LIBS@ @CAIRO_LIBS@ @ZIP_LIBS@ @MYSQL_LIBS@ @SQLITE3_LIBS@\
++	-lmysqlcppconn \
+ 	-lX11
+ 
+ #precompiled.h.gch: precompiled.h
