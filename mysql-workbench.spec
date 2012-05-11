@@ -2,7 +2,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	5.2.38
-Release:	1
+Release:	1.5
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
@@ -16,6 +16,7 @@ Patch4:		glib.patch
 Patch5:		pld-profile.patch
 Patch6:		get_local_ip_list.patch
 Patch7:		log_slow_queries.patch
+Patch8:		bashism.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -88,6 +89,7 @@ rm -rf ext/yassl
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 cp -p '%{SOURCE1}' res/mysql.profiles
 
 %build

@@ -1,0 +1,65 @@
+--- mysql-workbench-gpl-5.2.38-src/./frontend/linux/workbench/mysql-workbench.in~	2012-02-21 18:53:41.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/./frontend/linux/workbench/mysql-workbench.in	2012-05-11 20:35:21.219997098 +0300
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/bin/sh
+ 
+ # Uncomment the following line if you're having trouble with gnome-keyring lockups.
+ # This will cause passwords to be stored only temporarily for the session.
+--- mysql-workbench-gpl-5.2.38-src/./modules/wb.utils/wb_utils_grt.py~	2012-02-21 18:53:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/./modules/wb.utils/wb_utils_grt.py	2012-05-11 20:37:19.872151306 +0300
+@@ -114,7 +114,7 @@
+         subprocess.Popen(command, shell = True)
+     else:
+         command = """mysql \\"-u%s\\" \\"-h%s\\" -P%i %s -p %s""" % (user, host, port, socket, schema)
+-        subprocess.call(["/bin/bash", "-c", "%s -e \"%s\" &" % (get_linux_terminal_program(), command)])
++        subprocess.call(["/bin/sh", "-c", "%s -e \"%s\" &" % (get_linux_terminal_program(), command)])
+ 
+ 
+ # Utilities only work in Py 2.6
+@@ -160,14 +160,14 @@
+                 f.write('echo "The following MySQL Utilities are available:"\n')
+                 f.write('echo $MYSQL_UTILITIES_COMMANDS\n')
+                 f.write('rm -f "%s"\n' % setup_script)
+-                f.write('bash -i\n')
++                f.write('sh -i\n')
+                 f.close()
+                 os.chmod(setup_script, 0700)
+ 
+                 if 'konsole' in term:
+-                    subprocess.call([term, "-e", "/bin/bash", setup_script])
++                    subprocess.call([term, "-e", "/bin/sh", setup_script])
+                 else:
+-                    subprocess.call(["/bin/bash", "-c", "%s -e %s &" % (term, setup_script)])
++                    subprocess.call(["/bin/sh", "-c", "%s -e %s &" % (term, setup_script)])
+ 
+ 
+ class CheckForUpdateThread(threading.Thread):
+--- mysql-workbench-gpl-5.2.38-src/./plugins/wb.admin/frontend/wb_admin_grt.py~	2012-02-21 18:53:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/./plugins/wb.admin/frontend/wb_admin_grt.py	2012-05-11 20:38:09.431110024 +0300
+@@ -120,9 +120,9 @@
+       try:
+         if not server_instance.serverInfo["sys.sudo"]:
+           # don't break settings that were working perfectly before, assume a valid default
+-          server_instance.serverInfo["sys.sudo"] = "/usr/bin/sudo -p EnterPasswordHere /bin/bash -c"
++          server_instance.serverInfo["sys.sudo"] = "/usr/bin/sudo -p EnterPasswordHere /bin/sh -c"
+       except:
+-        server_instance.serverInfo["sys.sudo"] = "/usr/bin/sudo -p EnterPasswordHere /bin/bash -c"
++        server_instance.serverInfo["sys.sudo"] = "/usr/bin/sudo -p EnterPasswordHere /bin/sh -c"
+ 
+     app = App.get()
+     try:
+--- mysql-workbench-gpl-5.2.38-src/./plugins/wb.admin/backend/wb_server_management.py~	2012-02-21 18:53:36.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/./plugins/wb.admin/backend/wb_server_management.py	2012-05-11 20:39:04.223601285 +0300
+@@ -141,9 +141,9 @@
+       raise Exception("WBA: Internal error, unexpected character in script to be executed")
+ 
+     if not as_admin:
+-      result = pexpect.run("/bin/bash -c '" + script + "'", withexitstatus=True)
++      result = pexpect.run("/bin/sh -c '" + script + "'", withexitstatus=True)
+     else:
+-      child = pexpect.spawn("/bin/bash -c '" + script + "'") # script should already have sudo prefix
++      child = pexpect.spawn("/bin/sh -c '" + script + "'") # script should already have sudo prefix
+       try:
+           child.expect('assword', timeout=10)
+           if admin_password is not None:
