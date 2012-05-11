@@ -2,7 +2,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	5.2.38
-Release:	1.9
+Release:	1.10
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
@@ -37,7 +37,7 @@ BuildRequires:	libtool
 BuildRequires:	libuuid-devel
 BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
-BuildRequires:	mysql-connector-c++-devel >= 1.1.0
+BuildRequires:	mysql-connector-c++-devel >= 1.1.0-0.bzr916
 BuildRequires:	mysql-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
@@ -78,8 +78,7 @@ skomplikowanych migracji do MySQL-a.
 # we use System provided libraries
 rm -r ext/python/pexpect
 rm -r ext/cppconn
-rm -r ext/ctemplate
-# rm -rf library/tinyxml
+#rm -r ext/tinyxml
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
