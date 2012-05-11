@@ -4,7 +4,7 @@
  
  pkglib_LTLIBRARIES=libcdbc.la
 -
-+pkglib_LDFLAGS = -module -avoid-version
++libcdbc_la_LDFLAGS = -module -avoid-version
  
  libcdbc_la_SOURCES=\
  src/driver_manager.cpp\
