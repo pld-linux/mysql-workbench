@@ -1,0 +1,3 @@
+- add pld server type
+- update desktop stuff
+- drop deprecated gnome-vfs (we use shared mime info)
