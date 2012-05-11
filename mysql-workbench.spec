@@ -47,7 +47,6 @@ Requires:	python-paramiko
 Requires:	python-pexpect
 Requires:	python-sqlite
 Requires:	shared-mime-info
-# Patch2 requires xdg-utils
 Requires:	xdg-utils
 Suggests:	gnome-keyring
 Suggests:	sudo
@@ -74,10 +73,10 @@ skomplikowanych migracji do MySQL-a.
 %setup -q -n %{name}-gpl-%{version}-src
 %undos MySQLWorkbench.desktop.in
 # we use System provided libraries
-rm -rf ext/boost
-rm -rf ext/curl
-rm -rf ext/libsigc++
-rm -rf ext/yassl
+rm -r ext/boost
+rm -r ext/curl
+rm -r ext/libsigc++
+rm -r ext/yassl
 # rm -rf ext/cppconn
 # rm -rf ext/ctemplate
 # rm -rf library/tinyxml
