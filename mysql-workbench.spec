@@ -7,11 +7,13 @@ License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
 # Source0-md5:	cd2a0cec9dffd5465b6999f5d9c8de78
+Source1:	PLD_Linux_(MySQL_Package).xml
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-python_libs.patch
 Patch2:		%{name}-posix.patch
 Patch3:		automake.patch
 Patch4:		glib.patch
+Patch5:		pld-profile.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -37,9 +39,11 @@ BuildRequires:	readline-devel
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sqlite3-devel
+Requires:	desktop-file-utils
 Requires:	python-paramiko
 Requires:	python-pexpect
 Requires:	python-sqlite
+Requires:	shared-mime-info
 # Patch2 requires xdg-utils
 Requires:	xdg-utils
 Suggests:	gnome-keyring
@@ -79,6 +83,8 @@ rm -rf ext/yassl
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+cp -p '%{SOURCE1}' res/mysql.profiles
 
 %build
 %{__glib_gettextize}
@@ -90,24 +96,30 @@ rm -rf ext/yassl
 %configure \
 	--enable-readline \
 	CFLAGS="%{rpmcppflags} %{rpmcflags} -Wno-deprecated" \
-	LUA_LIBS="`pkg-config --libs lua51`" \
-	LUA_CFLAGS="`pkg-config --cflags lua51`"
+	LUA_LIBS="$(pkg-config --libs lua51)" \
+	LUA_CFLAGS="$(pkg-config --cflags lua51)"
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-install -d $RPM_BUILD_ROOT%{_pixmapsdir}
-
+# clear mimeinfodata_DATA because don't want deprecated gnome-vfs install
 %{__make} install \
+	doc_DATA= \
+	mimeinfodata_DATA= \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install images/icons/MySQLWorkbench-128.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
-mv -f $RPM_BUILD_ROOT%{_desktopdir}/{MySQLWorkbench,%{name}}.desktop
+install -d $RPM_BUILD_ROOT%{_pixmapsdir}
+cp -p images/icons/MySQLWorkbench-128.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
+
+mv $RPM_BUILD_ROOT%{_desktopdir}/{MySQLWorkbench,%{name}}.desktop
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+%update_desktop_database
+%update_mime_database
 
 %files
 %defattr(644,root,root,755)
@@ -115,7 +127,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-bin
 %{_datadir}/%{name}
-%{_datadir}/mime-info/mysql-workbench.mime
 %{_datadir}/mime/packages/mysql-workbench.xml
 %{_libdir}/%{name}
 %{_iconsdir}/hicolor/*x*/apps/mysql-workbench.png
