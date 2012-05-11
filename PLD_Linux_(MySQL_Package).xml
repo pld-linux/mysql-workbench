@@ -8,7 +8,7 @@
     <value type="string" key="sys.mysqld.stop">/sbin/service mysql stop</value>
     <value type="string" key="sys.mysqld.status">ps -C mysqld -o pid=</value>
     <value type="int" key="sys.usesudo">1</value>
-    <value type="int" key="sys.usesudostatus">0</value>
+    <value type="int" key="sys.usesudostatus">1</value>
     <value type="string" key="sys.sudo">/usr/bin/sudo -p EnterPasswordHere /bin/sh -c</value>
 
     <value type="string" key="sys.system">Linux</value>
