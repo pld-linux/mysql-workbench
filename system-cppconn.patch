@@ -63,7 +63,7 @@ diff -up mysql-workbench-gpl-5.2.26/library/dbc/src/driver_manager.cpp.cppconn m
  
 -  GModule *gmodule= g_module_open((_driver_path + "/" + library).c_str(), G_MODULE_BIND_LOCAL);
 +  if (p) {
-+    gmodule = g_module_open(std::string(p).append(".5").c_str(), G_MODULE_BIND_LOCAL);
++    gmodule = g_module_open(std::string(p).append(".6").c_str(), G_MODULE_BIND_LOCAL);
 +    g_free(p);
 +  }
 +
