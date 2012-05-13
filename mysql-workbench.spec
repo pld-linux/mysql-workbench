@@ -19,6 +19,7 @@ Patch7:		log_slow_queries.patch
 Patch8:		bashism.patch
 Patch9:		system-cppconn.patch
 Patch10:	avoid-version.patch
+Patch11:	wrapper-exec.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -90,6 +91,7 @@ rm -r ext/cppconn
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 cp -p '%{SOURCE1}' res/mysql.profiles
 
 %build

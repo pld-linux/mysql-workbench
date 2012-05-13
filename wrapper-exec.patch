@@ -1,0 +1,12 @@
+--- mysql-workbench-gpl-5.2.38-src/./frontend/linux/workbench/mysql-workbench.in~	2012-05-13 22:10:55.000000000 +0300
++++ mysql-workbench-gpl-5.2.38-src/./frontend/linux/workbench/mysql-workbench.in	2012-05-13 22:12:35.259827721 +0300
+@@ -57,7 +57,7 @@
+ 
+ 
+ if type -p catchsegv > /dev/null; then
+-catchsegv $bindirname/mysql-workbench-bin "$@"
++exec catchsegv $bindirname/mysql-workbench-bin "$@"
+ else
+-$bindirname/mysql-workbench-bin "$@"
++exec $bindirname/mysql-workbench-bin "$@"
+ fi
