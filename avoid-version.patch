@@ -4,7 +4,307 @@
  
  pkglib_LTLIBRARIES=libcdbc.la
 -
-+libcdbc_la_LDFLAGS = -module -avoid-version
++libcdbc_la_LDFLAGS = -avoid-version
  
  libcdbc_la_SOURCES=\
  src/driver_manager.cpp\
+--- mysql-workbench-gpl-5.2.38-src/library/grt/src/Makefile.am~	2012-02-21 18:53:42.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/library/grt/src/Makefile.am	2012-05-12 02:16:55.176694692 +0300
+@@ -18,7 +18,9 @@
+ 		@SIGC_LIBS@\
+ 		@GRT_LIBS@\
+ 		$(top_srcdir)/library/base/libwbbase.la
+-        
++
++libgrt_la_LDFLAGS = -avoid-version
++
+ libgrt_la_SOURCES=\
+ 	grtpp_grt.cpp\
+ 	grtpp_helper.cpp\
+--- mysql-workbench-gpl-5.2.38-src/frontend/linux/linux_utilities/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/frontend/linux/linux_utilities/Makefile.am	2012-05-12 02:18:22.364063083 +0300
+@@ -6,6 +6,8 @@
+ liblinux_utilities_la_LIBADD=$(top_srcdir)/frontend/linux/sqlide/libsqlide.la\
+                              $(top_srcdir)/ext/scintilla/gtk/libwbscintilla.la
+ 
++liblinux_utilities_la_LDFLAGS = -avoid-version
++
+ INCLUDES=@GLIB_CFLAGS@ @SIGC_CFLAGS@ @GRT_CFLAGS@ @CAIRO_CFLAGS@ @GNOME_CFLAGS@\
+ 	-I$(top_srcdir)/library/grt/src -I$(top_srcdir)/library/base\
+ 	-I$(top_srcdir)/backend/wbpublic -I$(top_srcdir)/generated -I$(top_srcdir)/library/canvas/src\
+--- mysql-workbench-gpl-5.2.38-src/library/canvas/src/Makefile.am~	2012-02-21 18:53:42.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/library/canvas/src/Makefile.am	2012-05-12 02:20:32.933605472 +0300
+@@ -51,6 +51,9 @@
+ libmdcanvas_la_LIBADD=@CAIRO_LIBS@
+ libmdcanvasgtk_la_LIBADD=@CAIRO_LIBS@ @GNOME_LIBS@
+ 
++libmdcanvas_la_LDFLAGS = -avoid-version
++libmdcanvasgtk_la_LDFLAGS = -avoid-version
++
+ INCLUDES=@CAIRO_CFLAGS@ @GNOME_CFLAGS@ \
+          -I$(top_srcdir)/backend \
+          -I$(top_srcdir)/library/base
+--- mysql-workbench-gpl-5.2.38-src/library/forms/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/library/forms/Makefile.am	2012-05-12 02:21:20.292469934 +0300
+@@ -75,6 +75,7 @@
+ gtk/src/lf_hypertext.cpp
+ 
+ libmforms_la_LIBADD=@GNOME_LIBS@ @GNOME_KEYRING_LIBS@
++libmforms_la_LDFLAGS = -avoid-version
+ 
+ INCLUDES=@GLIB_CFLAGS@ @GNOME_CFLAGS@ @SIGC_CFLAGS@ @CAIRO_CFLAGS@ @GNOME_KEYRING_CFLAGS@ @PCRE_CFLAGS@ \
+ -I$(top_srcdir)/library/forms\
+--- mysql-workbench-gpl-5.2.38-src/frontend/linux/sqlide/Makefile.am~	2012-02-21 18:53:46.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/frontend/linux/sqlide/Makefile.am	2012-05-12 02:22:01.407711315 +0300
+@@ -5,6 +5,7 @@
+ pkglib_LTLIBRARIES=libsqlide.la
+ 
+ libsqlide_la_LIBADD=$(top_srcdir)/ext/scintilla/gtk/libwbscintilla.la
++libsqlide_la_LDFLAGS = -avoid-version
+ 
+ INCLUDES=\
+ -I$(top_srcdir)/frontend/linux\
+--- mysql-workbench-gpl-5.2.38-src/library/sql-parser/source/Makefile.am~	2012-02-21 18:53:39.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/library/sql-parser/source/Makefile.am	2012-05-12 02:22:59.347066788 +0300
+@@ -3,6 +3,8 @@
+ AM_CFLAGS= $(CFLAGS) $(TEST_CFLAGS) 
+ AM_CXXFLAGS= $(CXXFLAGS) $(TEST_CFLAGS) -Wno-unknown-pragmas 
+ 
++libsqlparser_la_LDFLAGS = -avoid-version
++
+ libsqlparser_la_SOURCES=\
+ 	charset-def.cpp\
+ 	charset.cpp\
+--- mysql-workbench-gpl-5.2.38-src/ext/vsqlite++/src/sqlite/Makefile.am~	2012-02-21 18:53:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/ext/vsqlite++/src/sqlite/Makefile.am	2012-05-12 02:23:44.272484990 +0300
+@@ -1,5 +1,7 @@
+ pkglib_LTLIBRARIES=libvsqlitepp.la
+ 
++libvsqlitepp_la_LDFLAGS = -avoid-version
++
+ libvsqlitepp_la_SOURCES=\
+ 	command.cpp\
+ 	connection.cpp\
+--- mysql-workbench-gpl-5.2.38-src/library/base/Makefile.am~	2012-02-21 18:53:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/library/base/Makefile.am	2012-05-12 02:24:25.964419798 +0300
+@@ -10,6 +10,8 @@
+ libwbbase_la_LIBADD=@GLIB_LIBS@\
+ 					@PCRE_LIBS@ @CAIRO_LIBS@
+ 
++libwbbase_la_LDFLAGS = -avoid-version
++
+ libwbbase_la_SOURCES=util_functions.cpp\
+ 	sqlstring.cpp\
+ 	file_functions.cpp\
+--- mysql-workbench-gpl-5.2.38-src/backend/wbpublic/Makefile.am~	2012-02-21 18:53:41.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/backend/wbpublic/Makefile.am	2012-05-12 02:25:21.033642078 +0300
+@@ -21,6 +21,8 @@
+ 	-I$(top_srcdir)/backend/wbpublic -I$(top_srcdir)/generated\
+ 	-I$(top_srcdir)/modules
+ 
++libwbpublic_la_LDFLAGS = -avoid-version
++
+ libwbpublic_la_SOURCES=\
+ 	grt/refresh_ui.cpp\
+ 	grt/editor_base.cpp\
+--- mysql-workbench-gpl-5.2.38-src/ext/scintilla/gtk/Makefile.am~	2012-02-21 18:53:41.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/ext/scintilla/gtk/Makefile.am	2012-05-12 02:25:56.285278012 +0300
+@@ -9,6 +9,8 @@
+ 
+ libwbscintilla_la_LIBADD=@GNOME_LIBS@
+ 
++libwbscintilla_la_LDFLAGS = -avoid-version
++
+ libwbscintilla_la_SOURCES=\
+     scintilla-marshal.c\
+     ../src/Selection.cxx\
+--- mysql-workbench-gpl-5.2.38-src/modules/db.checks/Makefile.am~	2012-02-21 18:53:42.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/db.checks/Makefile.am	2012-05-12 02:26:46.417604515 +0300
+@@ -14,7 +14,7 @@
+                 -I$(top_srcdir)/modules/db.mysql/src\
+                 @GRT_CFLAGS@ @GLIB_CFLAGS@ @GNOME_CFLAGS@ @PCRE_CFLAGS@
+ 
+-db_checks_wbp_la_LDFLAGS=-module
++db_checks_wbp_la_LDFLAGS=-module -avoid-version
+ 
+ db_checks_wbp_la_SOURCES=\
+ ./register_plugin.cpp \
+--- mysql-workbench-gpl-5.2.38-src/modules/db.mysql.query/Makefile.am~	2012-02-21 18:53:42.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/db.mysql.query/Makefile.am	2012-05-12 02:27:31.016432039 +0300
+@@ -11,4 +11,4 @@
+ 
+ 
+ db_mysql_query_grt_la_SOURCES=src/dbquery.cpp
+-db_mysql_query_grt_la_LDFLAGS=-module
++db_mysql_query_grt_la_LDFLAGS=-module -avoid-version
+--- mysql-workbench-gpl-5.2.38-src/modules/db.mysql.sqlide/Makefile.am~	2012-02-21 18:53:41.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/db.mysql.sqlide/Makefile.am	2012-05-12 02:27:40.350199228 +0300
+@@ -22,7 +22,7 @@
+ @MYSQL_INCLUDE@ @GRT_CFLAGS@ @GLIB_CFLAGS@ @SIGC_CFLAGS@
+ 
+ 
+-db_mysql_sqlide_grt_la_LDFLAGS=-module
++db_mysql_sqlide_grt_la_LDFLAGS=-module -avoid-version
+ #db_mysql_sqlide_grt_la_LIBADD=
+ 
+ db_mysql_sqlide_grt_la_SOURCES=\
+--- mysql-workbench-gpl-5.2.38-src/modules/db.mysql.sqlparser/Makefile.am~	2012-02-21 18:53:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/db.mysql.sqlparser/Makefile.am	2012-05-12 02:27:47.210518114 +0300
+@@ -18,7 +18,7 @@
+ 	-I$(top_srcdir)/library/base\
+ 	@MYSQL_INCLUDE@ @GRT_CFLAGS@ @GLIB_CFLAGS@ @PCRE_CFLAGS@ @SIGC_CFLAGS@
+ 
+-db_mysql_sqlparser_grt_la_LDFLAGS=-module
++db_mysql_sqlparser_grt_la_LDFLAGS=-module -avoid-version
+ 
+ db_mysql_sqlparser_grt_la_SOURCES=\
+ 	src/db.mysql.sqlparser.cpp\
+--- mysql-workbench-gpl-5.2.38-src/modules/db.mysql/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/db.mysql/Makefile.am	2012-05-12 02:27:53.890828632 +0300
+@@ -32,7 +32,7 @@
+ #                        db_mysql_statement_parser_fe.cpp
+ #
+ 
+-db_mysql_grt_la_LDFLAGS=-module 
++db_mysql_grt_la_LDFLAGS=-module -avoid-version 
+ #ctemplate linked to main binary
+ #db_mysql_grt_la_LIBADD=-L$(top_srcdir)/ext/ctemplate/ctemplate-src/ $(top_srcdir)/ext/ctemplate/ctemplate-src/libctemplate_wb.la
+ 
+--- mysql-workbench-gpl-5.2.38-src/modules/db/Makefile.am~	2012-02-21 18:53:39.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/db/Makefile.am	2012-05-12 02:28:04.231309282 +0300
+@@ -10,5 +10,5 @@
+ 
+ 
+ dbutils_grt_la_SOURCES=src/dbutils.cpp
+-dbutils_grt_la_LDFLAGS=-module
++dbutils_grt_la_LDFLAGS=-module -avoid-version
+ # dbutils_grt_la_LIBADD=$(top_srcdir)/backend/grtdb/libgrtdbbe.la $(top_srcdir)/backend/grt/libgrtbe.la
+--- mysql-workbench-gpl-5.2.38-src/modules/grt.forms/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/grt.forms/Makefile.am	2012-05-12 02:28:12.138343489 +0300
+@@ -11,5 +11,5 @@
+ 
+ 
+ forms_grt_la_SOURCES=src/grt_forms.cpp
+-forms_grt_la_LDFLAGS=-module
++forms_grt_la_LDFLAGS=-module -avoid-version
+ 
+--- mysql-workbench-gpl-5.2.38-src/modules/wb.model/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/wb.model/Makefile.am	2012-05-12 02:28:20.332057685 +0300
+@@ -72,7 +72,7 @@
+ 	@CTEMPLATE_CFLAGS@ @MYSQL_INCLUDE@ @GRT_CFLAGS@ @GLIB_CFLAGS@ @PCRE_CFLAGS@
+ 
+ 
+-wb_model_grt_la_LDFLAGS=-module
++wb_model_grt_la_LDFLAGS=-module -avoid-version
+ #wb_model_grt_la_LIBADD=$(top_srcdir)/ext/ctemplate
+ 
+ wb_model_grt_la_SOURCES=src/graph_renderer.cpp \
+--- mysql-workbench-gpl-5.2.38-src/modules/wb.mysql.import/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/wb.mysql.import/Makefile.am	2012-05-12 02:28:27.719067719 +0300
+@@ -21,7 +21,7 @@
+ 	@MYSQL_INCLUDE@ @GRT_CFLAGS@ @GLIB_CFLAGS@ @SIGC_CFLAGS@
+ 
+ 
+-wb_mysql_import_grt_la_LDFLAGS=-module
++wb_mysql_import_grt_la_LDFLAGS=-module -avoid-version
+ #wb_mysql_import_grt_la_LIBADD=
+ 
+ wb_mysql_import_grt_la_SOURCES=\
+--- mysql-workbench-gpl-5.2.38-src/modules/wb.mysql.validation/Makefile.am~	2012-02-21 18:53:46.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/wb.mysql.validation/Makefile.am	2012-05-12 02:28:35.562765646 +0300
+@@ -20,7 +20,7 @@
+ 	@MYSQL_INCLUDE@ @GRT_CFLAGS@ @GLIB_CFLAGS@ @PCRE_CFLAGS@
+ 
+ 
+-wb_mysql_validation_grt_la_LDFLAGS=-module
++wb_mysql_validation_grt_la_LDFLAGS=-module -avoid-version
+ #wb_mysql_import_grt_la_LIBADD=$(top_srcdir)
+ wb_mysql_validation_grt_la_LIBADD=@GRT_LIBS@ @GLIB_LIBS@ @SIGC_LIBS@
+ 
+--- mysql-workbench-gpl-5.2.38-src/modules/wb.validation/Makefile.am~	2012-02-21 18:53:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/modules/wb.validation/Makefile.am	2012-05-12 02:28:43.576471476 +0300
+@@ -18,7 +18,7 @@
+ 	@MYSQL_INCLUDE@ @GRT_CFLAGS@ @GLIB_CFLAGS@ @SIGC_CFLAGS@
+ 
+ 
+-wb_validation_grt_la_LDFLAGS=-module
++wb_validation_grt_la_LDFLAGS=-module -avoid-version
+ #wb_mysql_import_grt_la_LIBADD=$(top_srcdir)/backend/grtdb/libgrtdbbe.la 
+ wb_validation_grt_la_LIBADD=@GRT_LIBS@ @GLIB_LIBS@ @SIGC_LIBS@
+ 
+--- mysql-workbench-gpl-5.2.38-src/plugins/wb.model.snippets/Makefile.am~	2012-02-21 18:53:46.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/plugins/wb.model.snippets/Makefile.am	2012-05-12 02:29:01.087285423 +0300
+@@ -22,7 +22,7 @@
+     @GRT_CFLAGS@ @GLIB_CFLAGS@ @SIGC_CFLAGS@ @CAIRO_CFLAGS@
+ 
+ 
+-wb_model_snippets_wbp_la_LDFLAGS=-module
++wb_model_snippets_wbp_la_LDFLAGS=-module -avoid-version
+ 
+ wb_model_snippets_wbp_la_SOURCES=\
+ include_model_wizard.cpp\
+--- mysql-workbench-gpl-5.2.38-src/plugins/wb.model.editors/linux/Makefile.am~	2012-02-21 18:53:42.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/plugins/wb.model.editors/linux/Makefile.am	2012-05-12 02:29:53.739732841 +0300
+@@ -21,7 +21,7 @@
+                 @GRT_CFLAGS@ @GLIB_CFLAGS@ @SIGC_CFLAGS@ @GNOME_CFLAGS@
+ 
+ 
+-wb_model_editors_wbp_la_LDFLAGS=-module
++wb_model_editors_wbp_la_LDFLAGS=-module -avoid-version
+ wb_model_editors_wbp_la_LIBADD=$(top_srcdir)/frontend/linux/linux_utilities/liblinux_utilities.la
+ 
+ wb_model_editors_wbp_la_SOURCES=\
+--- mysql-workbench-gpl-5.2.38-src/library/forms/swig/Makefile.am~	2012-05-12 02:32:22.000000000 +0300
++++ mysql-workbench-gpl-5.2.38-src/library/forms/swig/Makefile.am	2012-05-12 03:26:55.794262558 +0300
+@@ -15,6 +15,6 @@
+ -I$(top_srcdir)/library/base\
+ -I$(top_srcdir)/backend/wbpublic/
+ 
+-_mforms_la_LDFLAGS=-module
++_mforms_la_LDFLAGS=-module -avoid-version
+ 
+ 
+--- mysql-workbench-gpl-5.2.38-src/plugins/db.mysql.diff.reporting/frontend/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/plugins/db.mysql.diff.reporting/frontend/Makefile.am	2012-05-12 03:28:01.137271612 +0300
+@@ -22,7 +22,7 @@
+     @GRT_CFLAGS@ @GLIB_CFLAGS@ @SIGC_CFLAGS@ @CAIRO_CFLAGS@ @PCRE_CFLAGS@
+ 
+ 
+-db_mysql_diff_reporting_wbp_la_LDFLAGS=-module
++db_mysql_diff_reporting_wbp_la_LDFLAGS=-module -avoid-version
+ db_mysql_diff_reporting_wbp_la_LIBADD=$(top_srcdir)/library/grt/src/libgrt.la $(top_srcdir)/library/forms/libmforms.la @GLIB_LIBS@
+ 
+ 
+--- mysql-workbench-gpl-5.2.38-src/plugins/db.mysql.editors/linux/Makefile.am~	2012-02-21 18:53:46.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/plugins/db.mysql.editors/linux/Makefile.am	2012-05-12 03:28:23.031619788 +0300
+@@ -33,7 +33,7 @@
+                 @GRT_CFLAGS@ @GLIB_CFLAGS@ @GNOME_CFLAGS@ @SIGC_CFLAGS@
+ 
+ 
+-db_mysql_editors_wbp_la_LDFLAGS=-module
++db_mysql_editors_wbp_la_LDFLAGS=-module -avoid-version
+ db_mysql_editors_wbp_la_LIBADD=$(top_srcdir)/frontend/linux/linux_utilities/liblinux_utilities.la\
+                                $(top_srcdir)/ext/scintilla/gtk/libwbscintilla.la
+ 
+--- mysql-workbench-gpl-5.2.38-src/plugins/db.mysql/frontend/Makefile.am~	2012-02-21 18:53:39.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/plugins/db.mysql/frontend/Makefile.am	2012-05-12 03:28:40.849108112 +0300
+@@ -25,7 +25,7 @@
+     @GRT_CFLAGS@ @GLIB_CFLAGS@ @SIGC_CFLAGS@  @CAIRO_CFLAGS@ @PCRE_CFLAGS@
+ 
+ 
+-db_mysql_wbp_la_LDFLAGS=-module
++db_mysql_wbp_la_LDFLAGS=-module -avoid-version
+ 
+ db_mysql_wbp_la_SOURCES=\
+ ../backend/db_frw_eng_be.cpp\
+--- mysql-workbench-gpl-5.2.38-src/plugins/wb.printing/linux/Makefile.am~	2012-02-21 18:53:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.38-src/plugins/wb.printing/linux/Makefile.am	2012-05-12 03:28:56.869846901 +0300
+@@ -20,7 +20,7 @@
+                 @GRT_CFLAGS@ @GLIB_CFLAGS@ @SIGC_CFLAGS@ @GNOME_CFLAGS@
+ 
+ 
+-wb_printing_wbp_la_LDFLAGS=-module
++wb_printing_wbp_la_LDFLAGS=-module -avoid-version
+ wb_printing_wbp_la_LIBADD=$(top_srcdir)/frontend/linux/linux_utilities/liblinux_utilities.la
+ 
+ wb_printing_wbp_la_SOURCES=\
