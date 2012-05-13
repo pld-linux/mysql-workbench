@@ -2,7 +2,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	5.2.38
-Release:	1.10
+Release:	1.20
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
@@ -100,6 +100,7 @@ cp -p '%{SOURCE1}' res/mysql.profiles
 %{__autoheader}
 %{__automake}
 %configure \
+	--disable-dependency-tracking \
 	--enable-readline \
 	CFLAGS="%{rpmcppflags} %{rpmcflags} -Wno-deprecated" \
 	LUA_LIBS="$(pkg-config --libs lua51)" \
@@ -116,6 +117,11 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT%{_libdir}/%{name} -name '*.la'  | xargs rm -v
+
+%py_comp $RPM_BUILD_ROOT%{_libdir}/%{name}
+%py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
+# cleaning .py breaks ssh connections
+#%%py_postclean %{_libdir}/%{name} %{_datadir}/%{name}
 
 install -d $RPM_BUILD_ROOT%{_pixmapsdir}
 cp -p images/icons/MySQLWorkbench-128.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
@@ -144,7 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/*.so*
 %dir %{_libdir}/%{name}/modules
-%{_libdir}/%{name}/modules/*.py
+%{_libdir}/%{name}/modules/*.py*
 %{_libdir}/%{name}/modules/*.lua
 %attr(755,root,root) %{_libdir}/%{name}/modules/*.so*
 %dir %{_libdir}/%{name}/plugins
