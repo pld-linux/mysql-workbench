@@ -2,7 +2,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	5.2.39
-Release:	0.20
+Release:	0.21
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
@@ -53,6 +53,7 @@ Requires:	python-sqlite
 Requires:	shared-mime-info
 Requires:	xdg-utils
 Suggests:	gnome-keyring
+Suggests:	mysql-utilities
 Suggests:	sudo
 Obsoletes:	mysql-administrator
 Obsoletes:	mysql-gui-tools
