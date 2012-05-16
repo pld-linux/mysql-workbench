@@ -1,8 +1,11 @@
+# TODO
+# - server administration is broken: sudo locks up (time to time) and it puts
+#   EnterPasswordHere begginning of mysqld.conf if you try to manage settings
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	5.2.39
-Release:	0.21
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
