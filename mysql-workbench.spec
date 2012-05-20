@@ -1,21 +1,22 @@
+# NOTE
+# - change history: http://dev.mysql.com/doc/workbench/en/wb-change-history.html
 # TODO
 # - server administration is broken: sudo locks up (time to time) and it puts
 #   EnterPasswordHere begginning of mysqld.conf if you try to manage settings
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.2.39
+Version:	5.2.40
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
-# Source0-md5:	35472b00d48a82d1d13954aef4f916fa
+# Source0-md5:	ac5c2058cd39c796a1c7bed2647f74b6
 Source1:	PLD_Linux_(MySQL_Package).xml
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-python_libs.patch
 Patch2:		%{name}-posix.patch
 Patch3:		automake.patch
-Patch4:		glib.patch
 Patch5:		pld-profile.patch
 Patch6:		get_local_ip_list.patch
 Patch7:		log_slow_queries.patch
@@ -88,7 +89,6 @@ rm -r ext/cppconn
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
