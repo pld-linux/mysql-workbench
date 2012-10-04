@@ -50,6 +50,7 @@ BuildRequires:	readline-devel
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sqlite3-devel
+BuildRequires:	unixODBC-devel
 Requires:	desktop-file-utils
 Requires:	python-paramiko
 Requires:	python-pexpect
@@ -107,6 +108,7 @@ cp -p '%{SOURCE1}' res/mysql.profiles
 %{__automake}
 %configure \
 	--disable-dependency-tracking \
+	--with-unixodbc \
 	CFLAGS="%{rpmcppflags} %{rpmcflags} -Wno-deprecated" \
 	LUA_LIBS="$(pkg-config --libs lua51)" \
 	LUA_CFLAGS="$(pkg-config --cflags lua51)"
