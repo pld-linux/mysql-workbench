@@ -58,6 +58,7 @@ Requires:	shared-mime-info
 Requires:	xdg-utils
 Suggests:	gnome-keyring
 Suggests:	mysql-utilities
+Suggests:	python-pyodbc
 Suggests:	sudo
 Obsoletes:	mysql-administrator
 Obsoletes:	mysql-gui-tools
