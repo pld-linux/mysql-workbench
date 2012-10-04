@@ -16,6 +16,7 @@ Source1:	PLD_Linux_(MySQL_Package).xml
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-python_libs.patch
 Patch2:		%{name}-posix.patch
+Patch3:		system-antlr.patch
 Patch5:		pld-profile.patch
 Patch6:		get_local_ip_list.patch
 Patch7:		log_slow_queries.patch
@@ -33,6 +34,7 @@ BuildRequires:	ctemplate-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
 BuildRequires:	gtkmm-devel >= 2.12
+BuildRequires:	libantlr3c-devel >= 3.4
 BuildRequires:	libglade2-devel
 #BuildRequires:	libgnome-devel >= 2.0
 BuildRequires:	libgnome-keyring-devel
@@ -84,12 +86,14 @@ skomplikowanych migracji do MySQL-a.
 %setup -q -n %{name}-gpl-%{version}-src
 %undos MySQLWorkbench.desktop.in
 # we use System provided libraries
+rm -r ext/antlr-runtime
 rm -r ext/cppconn
 rm -r ext/python/pexpect
 #rm -r ext/tinyxml
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
