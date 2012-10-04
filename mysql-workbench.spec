@@ -6,8 +6,8 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.2.40
-Release:	1
+Version:	5.2.44
+Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
@@ -107,7 +107,6 @@ cp -p '%{SOURCE1}' res/mysql.profiles
 %{__automake}
 %configure \
 	--disable-dependency-tracking \
-	--enable-readline \
 	CFLAGS="%{rpmcppflags} %{rpmcflags} -Wno-deprecated" \
 	LUA_LIBS="$(pkg-config --libs lua51)" \
 	LUA_CFLAGS="$(pkg-config --cflags lua51)"
@@ -145,7 +144,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog README
 %attr(755,root,root) %{_bindir}/%{name}
-%attr(755,root,root) %{_bindir}/%{name}-bin
+%attr(755,root,root) %{_bindir}/wbcopytables
+
 %{_datadir}/%{name}
 %{_datadir}/mime/packages/mysql-workbench.xml
 %{_iconsdir}/hicolor/*x*/apps/mysql-workbench.png
@@ -154,6 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pixmapsdir}/%{name}.png
 
 %dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}-bin
 %attr(755,root,root) %{_libdir}/%{name}/*.so*
 %dir %{_libdir}/%{name}/modules
 %{_libdir}/%{name}/modules/*.py*

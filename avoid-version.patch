@@ -179,15 +179,15 @@
 -dbutils_grt_la_LDFLAGS=-module
 +dbutils_grt_la_LDFLAGS=-module -avoid-version
  # dbutils_grt_la_LIBADD=$(top_srcdir)/backend/grtdb/libgrtdbbe.la $(top_srcdir)/backend/grt/libgrtbe.la
---- mysql-workbench-gpl-5.2.38-src/modules/grt.forms/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
-+++ mysql-workbench-gpl-5.2.38-src/modules/grt.forms/Makefile.am	2012-05-12 02:28:12.138343489 +0300
-@@ -11,5 +11,5 @@
+--- mysql-workbench-gpl-5.2.44-src/modules/grt.forms/Makefile.am~	2012-09-26 23:50:46.000000000 +0300
++++ mysql-workbench-gpl-5.2.44-src/modules/grt.forms/Makefile.am	2012-10-04 12:00:06.713337129 +0300
+@@ -12,5 +12,5 @@
  
  
  forms_grt_la_SOURCES=src/grt_forms.cpp
 -forms_grt_la_LDFLAGS=-module
 +forms_grt_la_LDFLAGS=-module -avoid-version
- 
+ forms_grt_la_LIBADD=../../ext/scintilla/gtk/libwbscintilla.la
 --- mysql-workbench-gpl-5.2.38-src/modules/wb.model/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
 +++ mysql-workbench-gpl-5.2.38-src/modules/wb.model/Makefile.am	2012-05-12 02:28:20.332057685 +0300
 @@ -72,7 +72,7 @@
@@ -254,25 +254,27 @@
  wb_model_editors_wbp_la_LIBADD=$(top_srcdir)/frontend/linux/linux_utilities/liblinux_utilities.la
  
  wb_model_editors_wbp_la_SOURCES=\
---- mysql-workbench-gpl-5.2.38-src/library/forms/swig/Makefile.am~	2012-05-12 02:32:22.000000000 +0300
-+++ mysql-workbench-gpl-5.2.38-src/library/forms/swig/Makefile.am	2012-05-12 03:26:55.794262558 +0300
-@@ -15,6 +15,6 @@
- -I$(top_srcdir)/library/base\
+--- mysql-workbench-gpl-5.2.44-src/library/forms/swig/Makefile.am~	2012-09-26 23:50:47.000000000 +0300
++++ mysql-workbench-gpl-5.2.44-src/library/forms/swig/Makefile.am	2012-10-04 12:00:33.441243485 +0300
+@@ -25,7 +25,7 @@
+ -I$(top_srcdir)/ext/scintilla/include\
  -I$(top_srcdir)/backend/wbpublic/
  
 -_mforms_la_LDFLAGS=-module
+-_cairo_la_LDFLAGS=-module
 +_mforms_la_LDFLAGS=-module -avoid-version
++_cairo_la_LDFLAGS=-module -avoid-version
  
  
---- mysql-workbench-gpl-5.2.38-src/plugins/db.mysql.diff.reporting/frontend/Makefile.am~	2012-02-21 18:53:45.000000000 +0200
-+++ mysql-workbench-gpl-5.2.38-src/plugins/db.mysql.diff.reporting/frontend/Makefile.am	2012-05-12 03:28:01.137271612 +0300
-@@ -22,7 +22,7 @@
+--- mysql-workbench-gpl-5.2.44-src/plugins/db.mysql.diff.reporting/frontend/Makefile.am~	2012-09-26 23:50:42.000000000 +0300
++++ mysql-workbench-gpl-5.2.44-src/plugins/db.mysql.diff.reporting/frontend/Makefile.am	2012-10-04 12:00:50.945172367 +0300
+@@ -23,7 +23,7 @@
      @GRT_CFLAGS@ @GLIB_CFLAGS@ @SIGC_CFLAGS@ @CAIRO_CFLAGS@ @PCRE_CFLAGS@
  
  
 -db_mysql_diff_reporting_wbp_la_LDFLAGS=-module
 +db_mysql_diff_reporting_wbp_la_LDFLAGS=-module -avoid-version
- db_mysql_diff_reporting_wbp_la_LIBADD=$(top_srcdir)/library/grt/src/libgrt.la $(top_srcdir)/library/forms/libmforms.la @GLIB_LIBS@
+ db_mysql_diff_reporting_wbp_la_LIBADD=$(top_srcdir)/library/grt/src/libgrt.la $(top_srcdir)/library/forms/libmforms.la $(top_srcdir)/ext/scintilla/gtk/libwbscintilla.la @GLIB_LIBS@
  
  
 --- mysql-workbench-gpl-5.2.38-src/plugins/db.mysql.editors/linux/Makefile.am~	2012-02-21 18:53:46.000000000 +0200

@@ -1,11 +1,11 @@
---- mysql-workbench-gpl-5.2.38-src/./plugins/wb.admin/backend/wb_admin_control.py~	2012-02-21 18:53:37.000000000 +0200
-+++ mysql-workbench-gpl-5.2.38-src/./plugins/wb.admin/backend/wb_admin_control.py	2012-05-11 20:03:42.732364945 +0300
-@@ -675,7 +675,7 @@
+--- mysql-workbench-gpl-5.2.44-src/./plugins/wb.admin/backend/wb_admin_control.py~	2012-09-26 23:50:47.000000000 +0300
++++ mysql-workbench-gpl-5.2.44-src/./plugins/wb.admin/backend/wb_admin_control.py	2012-10-04 11:51:21.335635822 +0300
+@@ -677,7 +677,7 @@
                  general_log_file_path = opts[config_section].get('log', '').strip(' "') if opts.has_key(config_section) else ''
                  self.server_profile.general_log_file_path = general_log_file_path or os.path.join(datadir, hostname + '.log')
-                 
+ 
 -                slow_query_log_file = opts[config_section].get('log-slow-queries', '').strip(' "') if opts.has_key(config_section) else ''
 +                slow_query_log_file = (opts[config_section].get('log-slow-queries', '') or opts[config_section].get('log_slow_queries', '')).strip(' "') if opts.has_key(config_section) else ''
                  self.server_profile.slow_log_file_path = slow_query_log_file or os.path.join(datadir, hostname + '.slow')
-                 
+ 
                  error_log_file_path = opts[config_section].get('log-error', '').strip(' "') if opts.has_key(config_section) else ''

@@ -1,12 +1,12 @@
---- mysql-workbench-gpl-5.2.38-src/./frontend/linux/workbench/mysql-workbench.in~	2012-05-13 22:10:55.000000000 +0300
-+++ mysql-workbench-gpl-5.2.38-src/./frontend/linux/workbench/mysql-workbench.in	2012-05-13 22:12:35.259827721 +0300
-@@ -57,7 +57,7 @@
- 
+--- mysql-workbench-gpl-5.2.44-src/./frontend/linux/workbench/mysql-workbench.in~	2012-10-04 12:01:43.000000000 +0300
++++ mysql-workbench-gpl-5.2.44-src/./frontend/linux/workbench/mysql-workbench.in	2012-10-04 12:02:04.321049986 +0300
+@@ -59,7 +59,7 @@
+ export MWB_BASE_DIR="$basedirname"
  
  if type -p catchsegv > /dev/null; then
--catchsegv $bindirname/mysql-workbench-bin "$@"
-+exec catchsegv $bindirname/mysql-workbench-bin "$@"
+-catchsegv $basedirname/$libexecdir/mysql-workbench-bin "$@"
++exec catchsegv $basedirname/$libexecdir/mysql-workbench-bin "$@"
  else
--$bindirname/mysql-workbench-bin "$@"
-+exec $bindirname/mysql-workbench-bin "$@"
+-$basedirname/$libexecdir/mysql-workbench-bin "$@"
++exec $basedirname/$libexecdir/mysql-workbench-bin "$@"
  fi
