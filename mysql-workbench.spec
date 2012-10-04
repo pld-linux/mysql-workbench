@@ -7,7 +7,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	5.2.44
-Release:	0.2
+Release:	0.3
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
@@ -26,15 +26,15 @@ Patch11:	wrapper-exec.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	automake >= 1.9
 BuildRequires:	boost-devel
-BuildRequires:	cairo-devel >= 1.3.12
+BuildRequires:	cairo-devel >= 1.5.12
 BuildRequires:	ctemplate-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
-BuildRequires:	gtkmm-devel >= 2.4
+BuildRequires:	gtkmm-devel >= 2.12
 BuildRequires:	libglade2-devel
-BuildRequires:	libgnome-devel >= 2.0
+#BuildRequires:	libgnome-devel >= 2.0
 BuildRequires:	libgnome-keyring-devel
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libtool
@@ -43,6 +43,7 @@ BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
 BuildRequires:	mysql-connector-c++-devel >= 1.1.0-0.bzr916
 BuildRequires:	mysql-devel
+BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 BuildRequires:	readline-devel
@@ -82,8 +83,8 @@ skomplikowanych migracji do MySQL-a.
 %setup -q -n %{name}-gpl-%{version}-src
 %undos MySQLWorkbench.desktop.in
 # we use System provided libraries
-rm -r ext/python/pexpect
 rm -r ext/cppconn
+rm -r ext/python/pexpect
 #rm -r ext/tinyxml
 %patch0 -p1
 %patch1 -p1
