@@ -50,18 +50,9 @@ diff -up mysql-workbench-gpl-5.2.43-src/ext/Makefile.am.cppconn mysql-workbench-
  
  if BUNDLE_UTILITIES
  all-am:
-diff -up mysql-workbench-gpl-5.2.43-src/frontend/linux/workbench/Makefile.am.cppconn mysql-workbench-gpl-5.2.43-src/frontend/linux/workbench/Makefile.am
---- mysql-workbench-gpl-5.2.43-src/frontend/linux/workbench/Makefile.am.cppconn	2012-09-11 17:46:58.000000000 +0200
-+++ mysql-workbench-gpl-5.2.43-src/frontend/linux/workbench/Makefile.am	2012-09-13 18:09:35.484090509 +0200
-@@ -38,7 +38,6 @@ INCLUDES=@GLIB_CFLAGS@ @SIGC_CFLAGS@ @GR
- 	-I$(top_srcdir)/modules/wb.model/src\
- 	-I$(top_srcdir)/modules/interfaces\
- 	-I$(top_srcdir)/ext\
--	-I$(top_srcdir)/ext/cppconn\
- 	-I$(top_srcdir)/modules\
-   -I$(top_srcdir)/ext/vsqlite++/include\
-   -I$(top_srcdir)/ext/scintilla/include\
-@@ -54,14 +53,13 @@ mysql_workbench_bin_LDADD=\
+--- mysql-workbench-gpl-5.2.45-src/frontend/linux/workbench/Makefile.am~	2012-12-31 11:46:37.000000000 +0200
++++ mysql-workbench-gpl-5.2.45-src/frontend/linux/workbench/Makefile.am	2012-12-31 11:47:02.801997914 +0200
+@@ -53,14 +53,13 @@
  	$(top_srcdir)/library/base/libwbbase.la\
  	$(top_srcdir)/library/grt/src/libgrt.la\
  	$(top_srcdir)/library/dbc/libcdbc.la\
@@ -69,7 +60,7 @@ diff -up mysql-workbench-gpl-5.2.43-src/frontend/linux/workbench/Makefile.am.cpp
  	$(top_srcdir)/ext/scintilla/gtk/libwbscintilla.la\
  	$(top_srcdir)/library/canvas/src/libmdcanvasgtk.la\
  	$(top_srcdir)/library/canvas/src/libmdcanvas.la\
- 	$(top_srcdir)/library/mysql55-parser/libmysql55parser.la\
+ 	$(top_srcdir)/library/mysql-parser/libmysqlparser.la\
  	@CTEMPLATE_LIBS@\
  	@GNOME_LIBS@ @GRT_LIBS@ @PCRE_LIBS@ @GLIB_LIBS@ @CAIRO_LIBS@ @ZIP_LIBS@ @MYSQL_LIBS@ @SQLITE3_LIBS@\
 -	-lX11
