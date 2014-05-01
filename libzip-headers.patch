@@ -1,0 +1,38 @@
+
+Fix missing libzip includedir
+
+
+/grt -I../../ext/cppconn/ -I../../library/dbc/src -I../../ext/scintilla/include -I../../ext/vsqlite++/include -I../../ext/vsqli
+te -I../../ext/tinyxml    -O2 -fwrapv -pipe -Wformat -Werror=format-security -gdwarf-4 -fno-debug-types-section -fvar-tracking-
+assignments -g2 -Wp,-D_FORTIFY_SOURCE=2 -fstack-protector --param=ssp-buffer-size=4 -fPIC -march=x86-64 -gdwarf-4 -fno-debug-ty
+pes-section -fvar-tracking-assignments -g2  -Wextra -Wall -Wno-unused -Wno-deprecated    -DTIXML_USE_STL=1 -c -o wb_model_file.
+o `test -f 'workbench/wb_model_file.cpp' || echo './'`workbench/wb_model_file.cpp
+In file included from workbench/wb_model_file.cpp:24:0:
+/usr/include/zip.h:53:21: fatal error: zipconf.h: No such file or directory
+ #include <zipconf.h>
+                     ^
+compilation terminated.
+Makefile:1126: recipe for target 'wb_model_file.o' failed
+make[3]: *** [wb_model_file.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+In file included from ../../backend/wbpublic/grt/grt_manager.h:22:0,
+                 from workbench/wb_command_ui.h:25,
+                 from workbench/wb_context_ui.h:31,
+                 from workbench/wb_command_ui.cpp:23:
+../../library/grt/src/grtpp.h:113:5: warning: unused parameter 'index' [-Wunused-parameter]
+     bad_item(size_t index, size_t count) : std::logic_error("Index out of range.") {}
+     ^
+../../library/grt/src/grtpp.h:113:5: warning: unused parameter 'count' [-Wunused-parameter]
+In file included from ../../backend/wbpublic/grt/grt_dispatcher.h:23:0,
+                 from ../../backend/wbpublic/grt/grt_manager.h:26,
+--- mysql-workbench-gpl-5.2.47-src/backend/wbprivate/Makefile.am~	2013-02-14 22:54:06.000000000 +0200
++++ mysql-workbench-gpl-5.2.47-src/backend/wbprivate/Makefile.am	2014-05-01 18:39:09.127379244 +0300
+@@ -2,7 +2,7 @@
+ 
+ noinst_LIBRARIES=libwbprivate.a
+ 
+-INCLUDES=@GLIB_CFLAGS@ @SIGC_CFLAGS@ @GRT_CFLAGS@ @CAIRO_CFLAGS@ @GNOME_CFLAGS@ @PCRE_CFLAGS@\
++INCLUDES=@GLIB_CFLAGS@ @SIGC_CFLAGS@ @GRT_CFLAGS@ @CAIRO_CFLAGS@ @GNOME_CFLAGS@ @PCRE_CFLAGS@ @ZIP_CFLAGS@ \
+ 	-I$(top_srcdir)/library/grt/src -I$(top_srcdir)/library/base\
+ 	-I$(top_srcdir)/library/forms\
+ 	-I$(top_srcdir)/library/forms/mforms\
