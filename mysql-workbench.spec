@@ -1,36 +1,36 @@
 # NOTE
-# - change history: http://dev.mysql.com/doc/workbench/en/wb-change-history.html
+# - change history: http://dev.mysql.com/doc/relnotes/workbench/en/
 # TODO
 # - server administration is broken: sudo locks up (time to time) and it puts
 #   EnterPasswordHere begginning of mysqld.conf if you try to manage settings
+# - package docs? (use without "-nodocs" tarball)
+#
+# Conditional build:
+%bcond_without	gnome_keyring	# build with gnome-keyring
+%bcond_without	unixodbc		# Use unixODBC instead of iODBC
+%bcond_with	system_antlr	# Use system antlr (All known publicly available versions of Antlr3C are buggy)
+
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	5.2.47
+Version:	6.1.6
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases
-Source0:	ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQLGUITools/%{name}-gpl-%{version}-src.tar.gz
-# Source0-md5:	e7cfb1249dddf628a6586bc309679ef3
+Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-nodocs-src.tar.gz
+# Source0-md5:	3d73f7f3b459d60e5c39b4e80800bf4b
 Source1:	PLD_Linux_(MySQL_Package).xml
-Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-python_libs.patch
-Patch2:		%{name}-posix.patch
-Patch3:		system-antlr.patch
 Patch5:		pld-profile.patch
-Patch6:		get_local_ip_list.patch
 Patch7:		log_slow_queries.patch
 Patch8:		bashism.patch
-Patch9:		system-cppconn.patch
-Patch10:	avoid-version.patch
 Patch11:	wrapper-exec.patch
-Patch12:	libzip-headers.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.9
 BuildRequires:	boost-devel
 BuildRequires:	cairo-devel >= 1.5.12
+BuildRequires:	cmake >= 2.8
 BuildRequires:	ctemplate-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
@@ -39,21 +39,29 @@ BuildRequires:	libantlr3c-devel >= 3.4
 BuildRequires:	libglade2-devel
 #BuildRequires:	libgnome-devel >= 2.0
 BuildRequires:	libgnome-keyring-devel
+%{?with_gnome_keyring:BuildRequires:	libgnome-keyring-devel}
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
+BuildRequires:	libxml2-devel
 BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
 BuildRequires:	mysql-connector-c++-devel >= 1.1.0-0.bzr916
 BuildRequires:	mysql-devel
+BuildRequires:	pcre-cxx-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel
+BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	readline-devel
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.566
+BuildRequires:	rpmbuild(macros) >= 1.658
 BuildRequires:	sqlite3-devel
-BuildRequires:	unixODBC-devel
+BuildRequires:	swig
+BuildRequires:	tinyxml-devel
+%{?with_unixodbc:BuildRequires:	unixODBC-devel}
+BuildRequires:	libvsqlitepp-devel
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXext-devel
 Requires:	desktop-file-utils
 Requires:	python-paramiko
 Requires:	python-pexpect
@@ -84,62 +92,42 @@ danych, dokumentowania istniejących baz danych, a nawet wykonywania
 skomplikowanych migracji do MySQL-a.
 
 %prep
-%setup -q -n %{name}-gpl-%{version}-src
-%undos MySQLWorkbench.desktop.in
-# we use System provided libraries
-rm -r ext/antlr-runtime
-rm -r ext/cppconn
-rm -r ext/python/pexpect
-#rm -r ext/tinyxml
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup -q -n %{name}-community-%{version}-nodocs-src
 %patch5 -p1
-%patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
 %patch11 -p1
-%patch12 -p1
 cp -p '%{SOURCE1}' res/mysql.profiles
 
+# use System provided libraries
+%{?with_system_antlr:rm -r ext/antlr-runtime}
+#rm -r ext/scintilla
+#rm -r ext/HTMLRenderer
+#rm -r ext/Aga.Controls
+
 %build
-%{__glib_gettextize}
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--disable-dependency-tracking \
-	--with-unixodbc \
-	CFLAGS="%{rpmcppflags} %{rpmcflags} -Wno-deprecated" \
-	LUA_LIBS="$(pkg-config --libs lua51)" \
-	LUA_CFLAGS="$(pkg-config --cflags lua51)"
+%cmake . \
+	-DLIB_INSTALL_DIR=%{_libdir} \
+	-DWB_INSTALL_DIR_EXECUTABLE=%{_libdir}/%{name} \
+	-DUSE_UNIXODBC=%{!?with_unixodbc:NO}%{?with_unixodbc:YES}
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-# clear mimeinfodata_DATA because don't want deprecated gnome-vfs install
 %{__make} install \
-	doc_DATA= \
-	mimeinfodata_DATA= \
 	DESTDIR=$RPM_BUILD_ROOT
 
-find $RPM_BUILD_ROOT%{_libdir}/%{name} -name '*.la'  | xargs rm -v
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
+
+# deprecated gnome-vfs install
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/mime-info/%{name}.mime
 
 %py_comp $RPM_BUILD_ROOT%{_libdir}/%{name}
 %py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
-# cleaning .py breaks ssh connections
-#%%py_postclean %{_libdir}/%{name} %{_datadir}/%{name}
-
-install -d $RPM_BUILD_ROOT%{_pixmapsdir}
-cp -p images/icons/MySQLWorkbench-128.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
-
-mv $RPM_BUILD_ROOT%{_desktopdir}/{MySQLWorkbench,%{name}}.desktop
+# cleaning sshtunnel.py breaks ssh connections
+# cleaning the rest fails to import workbench.log
+%py_postclean -x sshtunnel.py %{_libdir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -152,21 +140,37 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog README
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/%{name}-bin
 %attr(755,root,root) %{_bindir}/wbcopytables
 
-%{_datadir}/%{name}
+%dir %{_datadir}/%{name}
+%attr(755,root,root) %{_datadir}/%{name}/sshtunnel.py
+%{_datadir}/%{name}/*.glade
+%{_datadir}/%{name}/*.py.txt
+%{_datadir}/%{name}/*.py[co]
+%{_datadir}/%{name}/*.rc
+%{_datadir}/%{name}/*.vbs
+%{_datadir}/%{name}/data
+%{_datadir}/%{name}/extras
+%{_datadir}/%{name}/grt
+%{_datadir}/%{name}/images
+%{_datadir}/%{name}/libraries
+%{_datadir}/%{name}/modules
+%{_datadir}/%{name}/mysql.profiles
+%{_datadir}/%{name}/script_templates
+%{_datadir}/%{name}/snippets
+%{_datadir}/%{name}/sys
+
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/*.so
+%dir %{_libdir}/%{name}/modules
+%{_libdir}/%{name}/modules/*.py*
+%attr(755,root,root) %{_libdir}/%{name}/modules/*.so
+%dir %{_libdir}/%{name}/plugins
+%attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
+
+# desktop stuff
 %{_datadir}/mime/packages/mysql-workbench.xml
 %{_iconsdir}/hicolor/*x*/apps/mysql-workbench.png
 %{_iconsdir}/hicolor/*x*/mimetypes/*.png
 %{_desktopdir}/%{name}.desktop
-%{_pixmapsdir}/%{name}.png
-
-%dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}-bin
-%attr(755,root,root) %{_libdir}/%{name}/*.so*
-%dir %{_libdir}/%{name}/modules
-%{_libdir}/%{name}/modules/*.py*
-%{_libdir}/%{name}/modules/*.lua
-%attr(755,root,root) %{_libdir}/%{name}/modules/*.so*
-%dir %{_libdir}/%{name}/plugins
-%attr(755,root,root) %{_libdir}/%{name}/plugins/*.so*
