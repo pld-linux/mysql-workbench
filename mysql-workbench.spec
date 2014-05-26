@@ -14,7 +14,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	6.1.6
-Release:	0.1
+Release:	0.4
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-nodocs-src.tar.gz
@@ -54,7 +54,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	readline-devel
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.566
+BuildRequires:	rpmbuild(macros) >= 1.658
 BuildRequires:	sqlite3-devel
 BuildRequires:	swig
 BuildRequires:	tinyxml-devel
@@ -125,8 +125,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %py_comp $RPM_BUILD_ROOT%{_libdir}/%{name}
 %py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
-# cleaning .py breaks ssh connections
-%py_postclean %{_libdir}/%{name} %{_datadir}/%{name}
+# cleaning sshtunnel.py breaks ssh connections
+%py_postclean -x sshtunnel.py %{_libdir}/%{name} %{_datadir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -142,11 +142,23 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}-bin
 %attr(755,root,root) %{_bindir}/wbcopytables
 
-%{_datadir}/%{name}
-%{_datadir}/mime/packages/mysql-workbench.xml
-%{_iconsdir}/hicolor/*x*/apps/mysql-workbench.png
-%{_iconsdir}/hicolor/*x*/mimetypes/*.png
-%{_desktopdir}/%{name}.desktop
+%dir %{_datadir}/%{name}
+%attr(755,root,root) %{_datadir}/%{name}/sshtunnel.py
+%{_datadir}/%{name}/*.glade
+%{_datadir}/%{name}/*.py.txt
+%{_datadir}/%{name}/*.py[co]
+%{_datadir}/%{name}/*.rc
+%{_datadir}/%{name}/*.vbs
+%{_datadir}/%{name}/data
+%{_datadir}/%{name}/extras
+%{_datadir}/%{name}/grt
+%{_datadir}/%{name}/images
+%{_datadir}/%{name}/libraries
+%{_datadir}/%{name}/modules
+%{_datadir}/%{name}/mysql.profiles
+%{_datadir}/%{name}/script_templates
+%{_datadir}/%{name}/snippets
+%{_datadir}/%{name}/sys
 
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/*.so
@@ -155,3 +167,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/modules/*.so
 %dir %{_libdir}/%{name}/plugins
 %attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
+
+# desktop stuff
+%{_datadir}/mime/packages/mysql-workbench.xml
+%{_iconsdir}/hicolor/*x*/apps/mysql-workbench.png
+%{_iconsdir}/hicolor/*x*/mimetypes/*.png
+%{_desktopdir}/%{name}.desktop
