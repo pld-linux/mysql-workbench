@@ -32,17 +32,15 @@ BuildRequires:	boost-devel
 BuildRequires:	cairo-devel >= 1.5.12
 BuildRequires:	cmake >= 2.8
 BuildRequires:	ctemplate-devel
-BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
 BuildRequires:	gtkmm-devel >= 2.12
-BuildRequires:	libantlr3c-devel >= 3.4
-BuildRequires:	libglade2-devel
-#BuildRequires:	libgnome-devel >= 2.0
+%{?with_system_antlr:BuildRequires:	libantlr3c-devel >= 3.4}
 BuildRequires:	libgnome-keyring-devel
 %{?with_gnome_keyring:BuildRequires:	libgnome-keyring-devel}
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
+BuildRequires:	libvsqlitepp-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
@@ -57,9 +55,9 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.658
 BuildRequires:	sqlite3-devel
 BuildRequires:	swig
+BuildRequires:	swig-python
 BuildRequires:	tinyxml-devel
 %{?with_unixodbc:BuildRequires:	unixODBC-devel}
-BuildRequires:	libvsqlitepp-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 Requires:	desktop-file-utils
