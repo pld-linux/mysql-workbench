@@ -14,7 +14,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	6.1.6
-Release:	0.4
+Release:	0.7
 License:	GPL v2
 Group:		Applications/Databases
 Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-nodocs-src.tar.gz
@@ -126,7 +126,8 @@ rm -rf $RPM_BUILD_ROOT
 %py_comp $RPM_BUILD_ROOT%{_libdir}/%{name}
 %py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
 # cleaning sshtunnel.py breaks ssh connections
-%py_postclean -x sshtunnel.py %{_libdir}/%{name} %{_datadir}/%{name}
+# cleaning the rest fails to import workbench.log
+%py_postclean -x sshtunnel.py %{_libdir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
