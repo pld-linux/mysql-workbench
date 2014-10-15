@@ -13,12 +13,12 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	6.1.7
+Version:	6.2.3
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases
-Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-nodocs-src.tar.gz
-# Source0-md5:	96ed84712662ae071378b7af363e70e4
+Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-src.tar.gz
+# Source0-md5:	d58ac1beeb3bdaaba65b48e2a24df79b
 Source1:	PLD_Linux_(MySQL_Package).xml
 Patch5:		pld-profile.patch
 Patch7:		log_slow_queries.patch
@@ -32,6 +32,7 @@ BuildRequires:	boost-devel
 BuildRequires:	cairo-devel >= 1.5.12
 BuildRequires:	cmake >= 2.8
 BuildRequires:	ctemplate-devel
+BuildRequires:	gdal-devel
 BuildRequires:	glib2-devel
 BuildRequires:	gtkmm-devel >= 2.12
 %{?with_system_antlr:BuildRequires:	libantlr3c-devel >= 3.4}
@@ -90,7 +91,7 @@ danych, dokumentowania istniejących baz danych, a nawet wykonywania
 skomplikowanych migracji do MySQL-a.
 
 %prep
-%setup -q -n %{name}-community-%{version}-nodocs-src
+%setup -q -n %{name}-community-%{version}-src
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
@@ -104,16 +105,19 @@ cp -p '%{SOURCE1}' res/mysql.profiles
 #rm -r ext/Aga.Controls
 
 %build
-%cmake . \
+install -d build
+cd build
+%cmake \
 	-DLIB_INSTALL_DIR=%{_libdir} \
 	-DWB_INSTALL_DIR_EXECUTABLE=%{_libdir}/%{name} \
-	-DUSE_UNIXODBC=%{!?with_unixodbc:NO}%{?with_unixodbc:YES}
+	-DUSE_UNIXODBC=%{!?with_unixodbc:NO}%{?with_unixodbc:YES} \
+	..
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
@@ -160,12 +164,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/sys
 
 %dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/*.so
+%attr(755,root,root) %{_libdir}/%{name}/*.so*
 %dir %{_libdir}/%{name}/modules
 %{_libdir}/%{name}/modules/*.py*
-%attr(755,root,root) %{_libdir}/%{name}/modules/*.so
+%attr(755,root,root) %{_libdir}/%{name}/modules/*.so*
 %dir %{_libdir}/%{name}/plugins
-%attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
+%attr(755,root,root) %{_libdir}/%{name}/plugins/*.so*
 
 # desktop stuff
 %{_datadir}/mime/packages/mysql-workbench.xml

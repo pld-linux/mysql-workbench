@@ -1,11 +1,11 @@
---- mysql-workbench-community-6.1.4-nodocs-src/./plugins/wb.admin/backend/wb_admin_control.py~	2014-03-26 17:47:23.000000000 +0200
-+++ mysql-workbench-community-6.1.4-nodocs-src/./plugins/wb.admin/backend/wb_admin_control.py	2014-05-04 00:45:02.024193812 +0300
-@@ -717,7 +717,7 @@
+--- mysql-workbench-community-6.2.3-src/plugins/wb.admin/backend/wb_admin_control.py~	2014-09-15 18:12:58.000000000 +0200
++++ mysql-workbench-community-6.2.3-src/plugins/wb.admin/backend/wb_admin_control.py	2014-10-15 12:18:45.183813688 +0200
+@@ -722,7 +722,7 @@
                  self.server_profile.general_log_file_path = general_log_file_path or os.path.join(self.server_profile.datadir, hostname + '.log')
                  request_save_profile = True
  
 -            slow_query_log_file = opts[config_section].get('log-slow-queries', '').strip(' "') if opts.has_key(config_section) else ''
 +            slow_query_log_file = (opts[config_section].get('log-slow-queries', '') or opts[config_section].get('log_slow_queries', '')).strip(' "') if opts.has_key(config_section) else ''
-             slow_query_log_file = normpath(slow_query_log_file)
-             if self.server_profile.slow_log_file_path != slow_query_log_file:
+             slow_query_log_file = normpath(slow_query_log_file) if slow_query_log_file else ''
+             if slow_query_log_file and self.server_profile.slow_log_file_path != slow_query_log_file:
                  self.server_profile.slow_log_file_path = slow_query_log_file or os.path.join(self.server_profile.datadir, hostname + '.slow')
