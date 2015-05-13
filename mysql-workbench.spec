@@ -155,9 +155,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-bin
 %attr(755,root,root) %{_bindir}/wbcopytables
+%attr(755,root,root) %{_bindir}/wbcopytables-bin
+
 
 %dir %{_datadir}/%{name}
 %attr(755,root,root) %{_datadir}/%{name}/sshtunnel.py
+%attr(755,root,root) %{_datadir}/%{name}/mysqlwbmeb.py
 %{_datadir}/%{name}/*.glade
 %{_datadir}/%{name}/*.py.txt
 %{_datadir}/%{name}/*.py[co]
