@@ -1,0 +1,13 @@
+stay in buildroot
+
+--- mysql-workbench-community-6.2.5-src/library/mysql.parser/grammar/build-parser~	2015-02-25 10:08:47.000000000 +0200
++++ mysql-workbench-community-6.2.5-src/library/mysql.parser/grammar/build-parser	2015-05-12 11:52:46.517522447 +0300
+@@ -2,7 +2,7 @@
+ 
+ TARGET_DIRECTORY=..
+ GENERATE_FILES=false
+-BASE_DIRECTORY=../../../..
++BASE_DIRECTORY=../../..
+ LINUX_RES_JAR_PATH=$BASE_DIRECTORY/linux-res/bin/antlr-3.4-complete.jar
+ SOURCE_FILE=MySQL.g
+ SOURCE_FILE2=MySQLSimpleParser.g
