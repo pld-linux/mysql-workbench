@@ -20,11 +20,14 @@ Group:		Applications/Databases
 # Source0Download: http://dev.mysql.com/downloads/workbench/
 Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-src.tar.gz
 # Source0-md5:	31f8bd081993854f76d0bc73df08c3ad
-Source1:	PLD_Linux_(MySQL_Package).xml
+Source1:	http://www.antlr3.org/download/antlr-3.4-complete.jar
+# Source1-md5:	1b91dea1c7d480b3223f7c8a9aa0e172
+Source2:	PLD_Linux_(MySQL_Package).xml
 Patch5:		pld-profile.patch
 Patch7:		log_slow_queries.patch
 Patch8:		bashism.patch
 Patch11:	wrapper-exec.patch
+Patch12:	antlr-res.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -97,10 +100,17 @@ skomplikowanych migracji do MySQL-a.
 %patch7 -p1
 %patch8 -p1
 %patch11 -p1
-cp -p '%{SOURCE1}' res/mysql.profiles
+%patch12 -p1
+cp -p '%{SOURCE2}' res/mysql.profiles
+
+%if %{with system_antlr}
+rm -r ext/antlr-runtime
+%else
+install -d linux-res/bin
+cp -p %{SOURCE1} linux-res/bin
+%endif
 
 # use System provided libraries
-%{?with_system_antlr:rm -r ext/antlr-runtime}
 #rm -r ext/scintilla
 #rm -r ext/HTMLRenderer
 #rm -r ext/Aga.Controls
