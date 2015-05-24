@@ -13,21 +13,21 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	6.2.5
+Version:	6.3.3
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 # Source0Download: http://dev.mysql.com/downloads/workbench/
 Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-src.tar.gz
-# Source0-md5:	31f8bd081993854f76d0bc73df08c3ad
+# Source0-md5:	f42b0ecfcc55fe241d7f28617962d77d
 Source1:	http://www.antlr3.org/download/antlr-3.4-complete.jar
 # Source1-md5:	1b91dea1c7d480b3223f7c8a9aa0e172
 Source2:	PLD_Linux_(MySQL_Package).xml
-Patch5:		pld-profile.patch
-Patch7:		log_slow_queries.patch
-Patch8:		bashism.patch
-Patch11:	wrapper-exec.patch
-Patch12:	antlr-res.patch
+Patch0:		pld-profile.patch
+Patch1:		log_slow_queries.patch
+Patch2:		bashism.patch
+Patch3:		wrapper-exec.patch
+Patch4:		antlr-res.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -96,11 +96,11 @@ skomplikowanych migracji do MySQL-a.
 
 %prep
 %setup -q -n %{name}-community-%{version}-src
-%patch5 -p1
-%patch7 -p1
-%patch8 -p1
-%patch11 -p1
-%patch12 -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 cp -p '%{SOURCE2}' res/mysql.profiles
 
 %if %{with system_antlr}
