@@ -1,12 +1,13 @@
---- mysql-workbench-community-6.1.4-nodocs-src/frontend/linux/workbench/mysql-workbench.in~	2014-03-26 17:47:23.000000000 +0200
-+++ mysql-workbench-community-6.1.4-nodocs-src/frontend/linux/workbench/mysql-workbench.in	2014-05-04 00:46:34.728331575 +0300
-@@ -51,7 +51,7 @@
- export MWB_BINARIES_DIR="$destdir@WB_INSTALL_DIR_EXECUTABLE@"
- 
- if type -p catchsegv > /dev/null; then
--catchsegv $MWB_BINARIES_DIR/mysql-workbench-bin "$@"
-+exec catchsegv $MWB_BINARIES_DIR/mysql-workbench-bin "$@"
+--- mysql-workbench-community-6.3.4-src/frontend/linux/workbench/mysql-workbench.in~	2015-10-15 10:22:21.000000000 +0200
++++ mysql-workbench-community-6.3.4-src/frontend/linux/workbench/mysql-workbench.in	2015-10-15 10:22:52.565329843 +0200
+@@ -74,8 +74,8 @@
+   $WB_DEBUG $MWB_BINARIES_DIR/mysql-workbench-bin "$@"
  else
--$MWB_BINARIES_DIR/mysql-workbench-bin "$@"
-+exec $MWB_BINARIES_DIR/mysql-workbench-bin "$@"
+   if type -p catchsegv > /dev/null; then
+-  catchsegv $MWB_BINARIES_DIR/mysql-workbench-bin "$@"
++  exec catchsegv $MWB_BINARIES_DIR/mysql-workbench-bin "$@"
+   else
+-  $MWB_BINARIES_DIR/mysql-workbench-bin "$@"
++  exec $MWB_BINARIES_DIR/mysql-workbench-bin "$@"
+   fi
  fi

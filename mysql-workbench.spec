@@ -13,13 +13,13 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	6.3.3
-Release:	2
+Version:	6.3.4
+Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases
 # Source0Download: http://dev.mysql.com/downloads/workbench/
 Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-src.tar.gz
-# Source0-md5:	f42b0ecfcc55fe241d7f28617962d77d
+# Source0-md5:	9bcbde151b46cfa374a906cd57dec33a
 Source1:	http://www.antlr3.org/download/antlr-3.4-complete.jar
 # Source1-md5:	1b91dea1c7d480b3223f7c8a9aa0e172
 Source2:	PLD_Linux_(MySQL_Package).xml
@@ -35,7 +35,7 @@ BuildRequires:	automake >= 1.9
 BuildRequires:	boost-devel
 BuildRequires:	cairo-devel >= 1.5.12
 BuildRequires:	cmake >= 2.8
-BuildRequires:	ctemplate-devel
+BuildRequires:	ctemplate-devel >= 2.3
 BuildRequires:	gdal-devel
 BuildRequires:	glib2-devel
 BuildRequires:	gtkmm-devel >= 2.12
@@ -79,6 +79,8 @@ Obsoletes:	mysql-administrator
 Obsoletes:	mysql-gui-tools
 Obsoletes:	mysql-query-browser
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		specflags			-std=gnu++11
 
 # too broken
 %define		no_install_post_check_so	1
