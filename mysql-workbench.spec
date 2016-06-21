@@ -13,13 +13,13 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	6.3.5
-Release:	2
+Version:	6.3.7
+Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases
 # Source0Download: http://dev.mysql.com/downloads/workbench/
 Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-src.tar.gz
-# Source0-md5:	efe4caf5ccd45e2d6d69778f294aa2c0
+# Source0-md5:	385987776b63ad9a1c9389a9da07a6c5
 Source1:	http://www.antlr3.org/download/antlr-3.4-complete.jar
 # Source1-md5:	1b91dea1c7d480b3223f7c8a9aa0e172
 Source2:	PLD_Linux_(MySQL_Package).xml
@@ -28,7 +28,7 @@ Patch1:		log_slow_queries.patch
 Patch2:		bashism.patch
 Patch3:		wrapper-exec.patch
 Patch4:		antlr-res.patch
-Patch5:		mysql-workbench-bug-78668.patch
+Patch5:		mysql-version.patch
 Patch6:		mysql-workbench-json.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
@@ -52,7 +52,7 @@ BuildRequires:	libxml2-devel
 BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
 BuildRequires:	mysql-connector-c++-devel >= 1.1.0-0.bzr916
-BuildRequires:	mysql-devel
+BuildRequires:	mysql-devel >= 5.6.0
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
