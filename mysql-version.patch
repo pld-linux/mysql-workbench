@@ -9,6 +9,8 @@ Call Stack (most recent call first):
   build/cmake/Modules/FindMySQL.cmake:90 (find_package_handle_standard_args)
   CMakeLists.txt:108 (find_package)
 
+UPDATE: as the fix did not work, just removing the 5.6.0 dependency for now
+
 --- mysql-workbench-community-6.3.7-src/build/cmake/Modules/FindMySQL.cmake~	2016-06-08 15:51:41.000000000 +0300
 +++ mysql-workbench-community-6.3.7-src/build/cmake/Modules/FindMySQL.cmake	2016-06-21 16:56:45.939252087 +0300
 @@ -73,7 +73,7 @@
@@ -20,3 +22,14 @@ Call Stack (most recent call first):
          
          # Find the library:
          set(MySQL_LIBRARY_NAMES mysqlclient mysqlclient_r)
+--- mysql-workbench-community-6.3.7-src/CMakeLists.txt~	2016-06-08 15:51:42.000000000 +0300
++++ mysql-workbench-community-6.3.7-src/CMakeLists.txt	2016-06-21 16:58:48.408962855 +0300
+@@ -105,7 +105,7 @@
+ if(NOT PY_PARAMIKO)
+   message(WARNING "Paramiko wasn't found, you can still build Workbench, but may not work properly.")
+ endif()
+-find_package(MySQL 5.6.0 REQUIRED)
++find_package(MySQL REQUIRED)
+ if (UNIX)
+ 	set(MYSQL_DEFINITIONS "-DBIG_JOINS=1"  "-fno-strict-aliasing")
+ endif()
