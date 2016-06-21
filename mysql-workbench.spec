@@ -29,7 +29,7 @@ Patch2:		bashism.patch
 Patch3:		wrapper-exec.patch
 Patch4:		antlr-res.patch
 Patch5:		mysql-version.patch
-Patch6:		mysql-workbench-json.patch
+Patch6:		%{name}-json.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -37,6 +37,7 @@ BuildRequires:	automake >= 1.9
 BuildRequires:	boost-devel
 BuildRequires:	cairo-devel >= 1.5.12
 BuildRequires:	cmake >= 2.8
+BuildRequires:	ctemplate >= 2.3
 BuildRequires:	ctemplate-devel >= 2.3
 BuildRequires:	gdal-devel
 BuildRequires:	glib2-devel
