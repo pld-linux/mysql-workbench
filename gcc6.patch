@@ -1,0 +1,36 @@
+diff -ur mysql-workbench-community-6.3.5-src/library/forms/gtk/src/lf_popover.cpp mysql-workbench-community-6.3.5-src-gcc6/library/forms/gtk/src/lf_popover.cpp
+--- mysql-workbench-community-6.3.5-src/library/forms/gtk/src/lf_popover.cpp	2015-10-17 16:35:48.000000000 +0200
++++ mysql-workbench-community-6.3.5-src-gcc6/library/forms/gtk/src/lf_popover.cpp	2017-03-03 22:55:15.329538287 +0100
+@@ -380,7 +380,7 @@
+   if (_style == mforms::PopoverStyleTooltip)
+   {
+     Glib::RefPtr<Gdk::Window> wnd = this->get_window();
+-    if (wnd != 0)
++    if (wnd)
+     {
+       int xx;
+       int yy;
+@@ -396,7 +396,7 @@
+   {
+     Gdk::ModifierType mask;
+     Glib::RefPtr<Gdk::Display> dsp = Gdk::Display::get_default();
+-    if (dsp != 0)
++    if (dsp)
+       dsp->get_pointer(x, y, mask);
+   }
+ 
+diff -ur mysql-workbench-community-6.3.5-src/library/forms/gtk/src/lf_popup.cpp mysql-workbench-community-6.3.5-src-gcc6/library/forms/gtk/src/lf_popup.cpp
+--- mysql-workbench-community-6.3.5-src/library/forms/gtk/src/lf_popup.cpp	2015-10-17 16:35:48.000000000 +0200
++++ mysql-workbench-community-6.3.5-src-gcc6/library/forms/gtk/src/lf_popup.cpp	2017-03-03 22:57:39.582616400 +0100
+@@ -81,7 +81,10 @@
+ {
+   d("\n");
+   Glib::RefPtr<Gdk::Colormap> colormap = screen->get_rgba_colormap();
+-  _have_rgba = colormap;
++  if (colormap)
++    _have_rgba = true;
++  else
++    _have_rgba = false;
+ 
+   if (!_have_rgba)
+     colormap = screen->get_rgb_colormap();

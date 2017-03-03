@@ -14,7 +14,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	6.3.5
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Applications/Databases
 # Source0Download: http://dev.mysql.com/downloads/workbench/
@@ -30,6 +30,7 @@ Patch3:		wrapper-exec.patch
 Patch4:		antlr-res.patch
 Patch5:		mysql-workbench-bug-78668.patch
 Patch6:		mysql-workbench-json.patch
+Patch7:		gcc6.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -107,6 +108,7 @@ skomplikowanych migracji do MySQL-a.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 cp -p '%{SOURCE2}' res/mysql.profiles
 
 %if %{with system_antlr}
