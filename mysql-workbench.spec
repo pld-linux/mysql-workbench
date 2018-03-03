@@ -13,13 +13,13 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	6.3.7
-Release:	0.1
+Version:	6.3.10
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 # Source0Download: http://dev.mysql.com/downloads/workbench/
 Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-src.tar.gz
-# Source0-md5:	385987776b63ad9a1c9389a9da07a6c5
+# Source0-md5:	565e52097c58a663d3498bb740eaefe5
 Source1:	http://www.antlr3.org/download/antlr-3.4-complete.jar
 # Source1-md5:	1b91dea1c7d480b3223f7c8a9aa0e172
 Source2:	PLD_Linux_(MySQL_Package).xml
@@ -30,6 +30,7 @@ Patch3:		wrapper-exec.patch
 Patch4:		antlr-res.patch
 Patch5:		mysql-version.patch
 Patch6:		%{name}-json.patch
+Patch7:		ldconfig.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -41,7 +42,7 @@ BuildRequires:	ctemplate >= 2.3
 BuildRequires:	ctemplate-devel >= 2.3
 BuildRequires:	gdal-devel
 BuildRequires:	glib2-devel
-BuildRequires:	gtkmm-devel >= 2.12
+BuildRequires:	gtkmm3-devel
 %{?with_system_antlr:BuildRequires:	libantlr3c-devel >= 3.4}
 BuildRequires:	libgnome-keyring-devel
 %{?with_gnome_keyring:BuildRequires:	libgnome-keyring-devel}
@@ -52,8 +53,8 @@ BuildRequires:	libvsqlitepp-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
-BuildRequires:	mysql-connector-c++-devel >= 1.1.0-0.bzr916
-BuildRequires:	mysql-devel >= 5.6.0
+BuildRequires:	mysql-connector-c++-devel >= 1.1.8
+BuildRequires:	/usr/bin/mysql_config
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
@@ -107,7 +108,8 @@ skomplikowanych migracji do MySQL-a.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+#%%patch6 -p1
+%patch7 -p1
 cp -p '%{SOURCE2}' res/mysql.profiles
 
 %if %{with system_antlr}
@@ -129,6 +131,7 @@ cd build
 	-DLIB_INSTALL_DIR=%{_libdir} \
 	-DWB_INSTALL_DIR_EXECUTABLE=%{_libdir}/%{name} \
 	-DUSE_UNIXODBC=%{!?with_unixodbc:NO}%{?with_unixodbc:YES} \
+	-DMySQL_CONFIG_PATH=%{_bindir}/mysql_config \
 	..
 
 %{__make}
@@ -171,7 +174,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/*.glade
 %{_datadir}/%{name}/*.py.txt
 %{_datadir}/%{name}/*.py[co]
-%{_datadir}/%{name}/*.rc
+#%%{_datadir}/%{name}/*.rc
+%{_datadir}/%{name}/*.css
 %{_datadir}/%{name}/*.vbs
 %{_datadir}/%{name}/data
 %{_datadir}/%{name}/extras

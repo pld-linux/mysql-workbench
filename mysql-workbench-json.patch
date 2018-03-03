@@ -1,70 +1,46 @@
---- mysql-workbench-community-6.3.5-src/plugins/migration/copytable/copytable.cpp~	2015-10-17 16:35:48.000000000 +0200
-+++ mysql-workbench-community-6.3.5-src/plugins/migration/copytable/copytable.cpp	2015-10-22 18:42:11.725161258 +0200
-@@ -79,7 +79,9 @@ static const char *mysql_field_type_to_n
-     case MYSQL_TYPE_VAR_STRING: return "MYSQL_TYPE_VAR_STRING";
-     case MYSQL_TYPE_STRING: return "MYSQL_TYPE_STRING";
-     case MYSQL_TYPE_GEOMETRY: return "MYSQL_TYPE_GEOMETRY";
+--- mysql-workbench-community-6.3.10-src/plugins/migration/copytable/copytable.cpp.orig	2017-11-09 17:11:42.000000000 +0100
++++ mysql-workbench-community-6.3.10-src/plugins/migration/copytable/copytable.cpp	2018-03-02 20:07:46.147102294 +0100
+@@ -109,8 +109,10 @@ static const char *mysql_field_type_to_n
+       return "MYSQL_TYPE_STRING";
+     case MYSQL_TYPE_GEOMETRY:
+       return "MYSQL_TYPE_GEOMETRY";
 +#ifdef MYSQL_TYPE_JSON
-     case MYSQL_TYPE_JSON: return "MYSQL_TYPE_JSON";
+     case MYSQL_TYPE_JSON:
+       return "MYSQL_TYPE_JSON";
 +#endif
      default:
        return "UNKNOWN";
    }
-@@ -241,6 +243,7 @@ RowBuffer::RowBuffer(boost::shared_ptr<s
+@@ -295,7 +297,9 @@ RowBuffer::RowBuffer(std::shared_ptr<std
        case MYSQL_TYPE_STRING:
        case MYSQL_TYPE_VAR_STRING:
        case MYSQL_TYPE_BIT:
 +#ifdef MYSQL_TYPE_JSON
        case MYSQL_TYPE_JSON:
++#endif
          if (!col->is_long_data)
-           bind.buffer_length = (unsigned)col->source_length+1;
-@@ -249,6 +252,7 @@ RowBuffer::RowBuffer(boost::shared_ptr<s
-         if (!bind.length)
-           throw std::runtime_error("Could not allocate memory for row buffer");
-         break;
-+#endif
-       case MYSQL_TYPE_BLOB:
-       case MYSQL_TYPE_GEOMETRY:
-         // source_length is not reliable (and returns bogus value for access)
-@@ -1551,8 +1555,11 @@ bool MySQLCopyDataSource::fetch_row(RowB
-             rowbuffer[index].buffer_type == MYSQL_TYPE_LONG_BLOB ||
-             rowbuffer[index].buffer_type == MYSQL_TYPE_BLOB ||
-             rowbuffer[index].buffer_type == MYSQL_TYPE_STRING ||
--            rowbuffer[index].buffer_type == MYSQL_TYPE_GEOMETRY ||
--            rowbuffer[index].buffer_type == MYSQL_TYPE_JSON)
-+            rowbuffer[index].buffer_type == MYSQL_TYPE_GEOMETRY
+           bind.buffer_length = (unsigned)col->source_length + 1;
+ 
+@@ -1392,7 +1396,11 @@ bool MySQLCopyDataSource::fetch_row(RowB
+               rowbuffer[index].buffer_type == MYSQL_TYPE_MEDIUM_BLOB ||
+               rowbuffer[index].buffer_type == MYSQL_TYPE_LONG_BLOB || rowbuffer[index].buffer_type == MYSQL_TYPE_BLOB ||
+               rowbuffer[index].buffer_type == MYSQL_TYPE_STRING ||
+-              rowbuffer[index].buffer_type == MYSQL_TYPE_GEOMETRY || rowbuffer[index].buffer_type == MYSQL_TYPE_JSON) {
++              rowbuffer[index].buffer_type == MYSQL_TYPE_GEOMETRY
 +#ifdef MYSQL_TYPE_JSON
-+            || rowbuffer[index].buffer_type == MYSQL_TYPE_JSON
++              || rowbuffer[index].buffer_type == MYSQL_TYPE_JSON
 +#endif
-+            )
-           {
++              ){
              if (rowbuffer[index].buffer_length)
                free(rowbuffer[index].buffer);
-@@ -2357,11 +2364,13 @@ bool MySQLCopyDataTarget::append_bulk_co
-     case MYSQL_TYPE_STRING:
-     case MYSQL_TYPE_ENUM:
-     case MYSQL_TYPE_SET:
+ 
+@@ -2162,7 +2170,9 @@ bool MySQLCopyDataTarget::append_bulk_co
+       case MYSQL_TYPE_STRING:
+       case MYSQL_TYPE_ENUM:
+       case MYSQL_TYPE_SET:
 +#ifdef MYSQL_TYPE_JSON
-     case MYSQL_TYPE_JSON:
-       _bulk_insert_record.append("'", 1);
-       ret_val = _bulk_insert_record.append_escaped((char*)(*_row_buffer)[col_index].buffer, *(*_row_buffer)[col_index].length);
-       _bulk_insert_record.append("'", 1);
-       break;
+       case MYSQL_TYPE_JSON:
 +#endif
-     case MYSQL_TYPE_TIME:
-     case MYSQL_TYPE_DATE:
-     case MYSQL_TYPE_NEWDATE:
---- mysql-workbench-community-6.3.5-src/backend/wbpublic/objimpl/db.query/db_query_Resultset.cpp~	2015-10-17 16:35:49.000000000 +0200
-+++ mysql-workbench-community-6.3.5-src/backend/wbpublic/objimpl/db.query/db_query_Resultset.cpp	2015-10-22 18:58:55.605073479 +0200
-@@ -300,9 +300,11 @@ public:
-         case sql::DataType::SET:
-           type= "string";
-           break;
-+#ifdef MYSQL_TYPE_JSON
-         case sql::DataType::JSON:
-           type = "json";
-           break;
-+#endif
-         case sql::DataType::SQLNULL:
-           type = "null";
-           break;          
+         _bulk_insert_record.append("'", 1);
+         ret_val = _bulk_insert_record.append_escaped((char *)(*_row_buffer)[col_index].buffer,
+                                                      *(*_row_buffer)[col_index].length);
