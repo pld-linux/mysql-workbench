@@ -14,7 +14,7 @@ Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
 Version:	6.3.10
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases
 # Source0Download: http://dev.mysql.com/downloads/workbench/
@@ -57,7 +57,6 @@ BuildRequires:	mysql-connector-c++-devel >= 1.1.8
 BuildRequires:	/usr/bin/mysql_config
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pcre-devel
-BuildRequires:	percona-server-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	readline-devel
