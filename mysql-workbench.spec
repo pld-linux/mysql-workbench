@@ -57,6 +57,7 @@ BuildRequires:	mysql-connector-c++-devel >= 1.1.8
 BuildRequires:	/usr/bin/mysql_config
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pcre-devel
+BuildRequires:	percona-server-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.6
 BuildRequires:	readline-devel
@@ -108,7 +109,7 @@ skomplikowanych migracji do MySQL-a.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-#%%patch6 -p1
+%patch6 -p1
 %patch7 -p1
 cp -p '%{SOURCE2}' res/mysql.profiles
 
