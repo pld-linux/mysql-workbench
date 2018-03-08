@@ -4,7 +4,7 @@
     */
    JsonValue &JsonArray::at(SizeType pos) {
      if (pos > _data.size())
-+#ifdef __x86_64__
++#if defined(__x86_64__) && !defined(__ILP32__)
        throw std::out_of_range(base::strfmt("Index '%lu' is out of range.", pos));
 +#else
 +      throw std::out_of_range(base::strfmt("Index '%u' is out of range.", pos));
@@ -16,7 +16,7 @@
     */
    const JsonValue &JsonArray::at(SizeType pos) const {
      if (pos > _data.size())
-+#ifdef __x86_64__
++#if defined(__x86_64__) && !defined(__ILP32__)
        throw std::out_of_range(base::strfmt("Index '%lu' is out of range.", pos));
 +#else
 +      throw std::out_of_range(base::strfmt("Index '%u' is out of range.", pos));
