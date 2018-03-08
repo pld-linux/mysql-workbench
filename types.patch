@@ -1,0 +1,15 @@
+--- mysql-workbench-community-6.3.10-src/library/base/jsonparser.cpp~	2017-11-09 16:11:42.000000000 +0000
++++ mysql-workbench-community-6.3.10-src/library/base/jsonparser.cpp	2018-03-08 13:43:48.632064990 +0000
+@@ -1677,10 +1677,10 @@
+         _output += std::to_string((double)value);
+         break;
+       case VInt64:
+-        _output += std::to_string((int64_t)value);
++        _output += std::to_string((ssize_t)value);
+         break;
+       case VUint64:
+-        _output += std::to_string((uint64_t)value);
++        _output += std::to_string((size_t)value);
+         break;
+       case VObject:
+         write((JsonObject)value);
