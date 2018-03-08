@@ -13,3 +13,68 @@
          break;
        case VObject:
          write((JsonObject)value);
+--- mysql-workbench-community-6.3.10-src/library/forms/jsonview.cpp.orig	2018-03-08 15:19:36.753949179 +0000
++++ mysql-workbench-community-6.3.10-src/library/forms/jsonview.cpp	2018-03-08 15:21:06.994864431 +0000
+@@ -669,7 +669,7 @@
+           break;
+         buffer << value;
+         buffer >> number2;
+-        storedValue = number2;
++        storedValue = (ssize_t)number2;
+         setData = true;
+         break;
+       case VUint64:
+@@ -677,7 +677,7 @@
+           break;
+         buffer << value;
+         buffer >> number3;
+-        storedValue = number3;
++        storedValue = (size_t)number3;
+         setData = true;
+         break;
+       case VBoolean:
+@@ -1074,11 +1074,11 @@
+       node->set_string(2, "Double");
+       break;
+     case VInt64:
+-      node->set_string(1, std::to_string((int64_t)value));
++      node->set_string(1, std::to_string((ssize_t)value));
+       node->set_string(2, "Long Integer");
+       break;
+     case VUint64:
+-      node->set_string(1, std::to_string((uint64_t)value));
++      node->set_string(1, std::to_string((size_t)value));
+       node->set_string(2, "Unsigned Long Integer");
+       break;
+     default:
+@@ -1340,7 +1340,7 @@
+           break;
+         buffer << value;
+         buffer >> number2;
+-        storedValue = number2;
++        storedValue = (ssize_t)number2;
+         node->set_long(column, number2);
+         _dataChanged(false);
+         break;
+@@ -1349,7 +1349,7 @@
+           break;
+         buffer << value;
+         buffer >> number3;
+-        storedValue = number3;
++        storedValue = (size_t)number3;
+         node->set_float(column, (double)number3);
+         _dataChanged(false);
+         break;
+@@ -1613,10 +1613,10 @@
+       node->set_float(columnId, (double)value);
+       break;
+     case VInt64:
+-      node->set_long(columnId, (int64_t)value);
++      node->set_long(columnId, (ssize_t)value);
+       break;
+     case VUint64:
+-      node->set_long(columnId, (uint64_t)value);
++      node->set_long(columnId, (size_t)value);
+       break;
+     default:
+       break;
