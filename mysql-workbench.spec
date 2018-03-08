@@ -29,8 +29,7 @@ Patch2:		bashism.patch
 Patch3:		wrapper-exec.patch
 Patch4:		antlr-res.patch
 Patch5:		mysql-version.patch
-Patch6:		%{name}-json.patch
-Patch7:		ldconfig.patch
+Patch6:		ldconfig.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -109,7 +108,6 @@ skomplikowanych migracji do MySQL-a.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 cp -p '%{SOURCE2}' res/mysql.profiles
 
 %if %{with system_antlr}
