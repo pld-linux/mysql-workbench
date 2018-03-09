@@ -1,26 +1,20 @@
 --- mysql-workbench-community-6.3.10-src/library/base/jsonparser.cpp~	2017-11-09 16:11:42.000000000 +0000
 +++ mysql-workbench-community-6.3.10-src/library/base/jsonparser.cpp	2018-03-08 13:43:48.632064990 +0000
-@@ -343,7 +343,11 @@
+@@ -343,7 +343,7 @@
     */
    JsonValue &JsonArray::at(SizeType pos) {
      if (pos > _data.size())
-+#if defined(__x86_64__) && !defined(__ILP32__)
-       throw std::out_of_range(base::strfmt("Index '%lu' is out of range.", pos));
-+#else
-+      throw std::out_of_range(base::strfmt("Index '%u' is out of range.", pos));
-+#endif
+-      throw std::out_of_range(base::strfmt("Index '%lu' is out of range.", pos));
++      throw std::out_of_range(base::strfmt("Index '%zu' is out of range.", pos));
      return _data.at(pos);
    }
  
-@@ -358,7 +362,11 @@
+@@ -358,7 +358,7 @@
     */
    const JsonValue &JsonArray::at(SizeType pos) const {
      if (pos > _data.size())
-+#if defined(__x86_64__) && !defined(__ILP32__)
-       throw std::out_of_range(base::strfmt("Index '%lu' is out of range.", pos));
-+#else
-+      throw std::out_of_range(base::strfmt("Index '%u' is out of range.", pos));
-+#endif
+-      throw std::out_of_range(base::strfmt("Index '%lu' is out of range.", pos));
++      throw std::out_of_range(base::strfmt("Index '%zu' is out of range.", pos));
      return _data.at(pos);
    }
  
