@@ -1,0 +1,31 @@
+--- mysql-workbench-community-6.3.10-src/library/base/threaded_timer.cpp~	2017-11-09 17:11:42.000000000 +0100
++++ mysql-workbench-community-6.3.10-src/library/base/threaded_timer.cpp	2019-11-02 23:47:55.439608459 +0100
+@@ -173,7 +173,7 @@
+ /**
+  * Entry point for all pool (worker) threads.
+  */
+-gpointer ThreadedTimer::pool_function(gpointer data, gpointer user_data) {
++void ThreadedTimer::pool_function(gpointer data, gpointer user_data) {
+   ThreadedTimer *timer = static_cast<ThreadedTimer *>(user_data);
+   TimerTask *task = static_cast<TimerTask *>(data);
+ 
+@@ -197,8 +197,6 @@
+     task->scheduled = false;
+     logWarning("Threaded timer: unknown exception in pool function\n");
+   }
+-
+-  return NULL;
+ }
+ 
+ //--------------------------------------------------------------------------------------------------
+--- mysql-workbench-community-6.3.10-src/library/base/base/threaded_timer.h~	2017-11-09 17:11:42.000000000 +0100
++++ mysql-workbench-community-6.3.10-src/library/base/base/threaded_timer.h	2019-11-02 23:55:37.562925708 +0100
+@@ -82,7 +82,7 @@
+   ~ThreadedTimer();
+ 
+   static gpointer start(gpointer data);
+-  static gpointer pool_function(gpointer data, gpointer user_data);
++  static void pool_function(gpointer data, gpointer user_data);
+   void main_loop();
+   void remove(int task_id);
+ };
