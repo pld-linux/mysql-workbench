@@ -1,13 +1,12 @@
-stay in buildroot
-
---- mysql-workbench-community-6.3.10-src/library/parsers/grammars/build-parsers~	2015-02-25 10:08:47.000000000 +0200
-+++ mysql-workbench-community-6.3.10-src/library/parsers/grammars/build-parsers	2015-05-12 11:52:46.517522447 +0300
-@@ -2,7 +2,7 @@
+--- mysql-workbench-community-8.0.34-src/CMakeLists.txt.orig	2023-07-13 14:52:08.000000000 +0200
++++ mysql-workbench-community-8.0.34-src/CMakeLists.txt	2023-09-16 12:42:01.501693526 +0200
+@@ -144,8 +144,7 @@
+ check_function_exists (strtoumax HAVE_STRTOUMAX)
  
- TARGET_DIRECTORY=..
- GENERATE_FILES=false
--BASE_DIRECTORY=../../../..
-+BASE_DIRECTORY=../../..
- LINUX_RES_JAR_PATH=$BASE_DIRECTORY/linux-res/bin/antlr-3.4-complete.jar
- SOURCE_FILE=MySQL.g
- SOURCE_FILE2=MySQLSimpleParser.g
+ set(ANTLR_JAR_FILENAME "antlr-4.11.1-complete.jar")
+-get_filename_component(SOURCE_PARENT_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
+-set(LINUX_RES_BIN_DIR ${SOURCE_PARENT_DIR}/linux-res/bin)
++set(LINUX_RES_BIN_DIR ${CMAKE_SOURCE_DIR}/linux-res/bin)
+ message("WITH_ANTLR_JAR: ${WITH_ANTLR_JAR}")
+ if(WITH_ANTLR_JAR)
+   get_filename_component(ANTLR_JAR_USER_DIR ${WITH_ANTLR_JAR} DIRECTORY)

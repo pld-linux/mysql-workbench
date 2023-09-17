@@ -25,11 +25,11 @@ UPDATE: as the fix did not work, just removing the 5.6.0 dependency for now
 --- mysql-workbench-community-6.3.7-src/CMakeLists.txt~	2016-06-08 15:51:42.000000000 +0300
 +++ mysql-workbench-community-6.3.7-src/CMakeLists.txt	2016-06-21 16:58:48.408962855 +0300
 @@ -105,7 +105,7 @@
- if(NOT PY_PARAMIKO)
-   message(WARNING "Paramiko wasn't found, you can still build Workbench, but may not work properly.")
- endif()
+ find_program(PYTHON_EXEC "python3")
+ include(FindPackageHandleStandardArgs)
+ 
 -find_package(MySQL 5.6.0 REQUIRED)
 +find_package(MySQL REQUIRED)
- if (UNIX)
- 	set(MYSQL_DEFINITIONS "-DBIG_JOINS=1"  "-fno-strict-aliasing")
- endif()
+ find_package(LibXml2 REQUIRED)
+ 
+ 

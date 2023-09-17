@@ -2,10 +2,10 @@
 +++ mysql-workbench-community-6.3.10-src/library/base/base/common.h	2018-03-08 18:11:20.498742204 +0100
 @@ -95,6 +95,8 @@
  
- #ifdef __LP64__
- #define DEFINE_INT_FUNCTIONS
-+#else
-+#define DEFINE_UINT64_T_FUNCTIONS
- #endif
+   #ifdef __LP64__
+     #define DEFINE_INT_FUNCTIONS
++  #else
++    #define DEFINE_UINT64_T_FUNCTIONS
+   #endif
  
- #ifdef __APPLE__
+   #ifdef __APPLE__

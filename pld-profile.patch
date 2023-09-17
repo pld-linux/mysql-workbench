@@ -2,9 +2,9 @@
 +++ mysql-workbench-community-6.1.4-nodocs-src/res/mysql.profiles/CMakeLists.txt	2014-05-04 00:23:21.709685131 +0300
 @@ -8,6 +8,7 @@
      "Linux_(Custom).xml"
-     "MacOS_X_(MySQL_Package).xml"
+     "macOS_(MySQL_Package).xml"
      "OpenSolaris_(MySQL_Package).xml"
 +    "PLD_Linux_(MySQL_Package).xml"
      "RHEL_(MySQL_Package).xml"
+     "RHEL_7_(MySQL_Package).xml"
      "Oracle_Linux_6_(MySQL_Package).xml"
-     "SLES_(MySQL_Package).xml"

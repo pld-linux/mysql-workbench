@@ -4,8 +4,8 @@
                  self.server_profile.general_log_file_path = general_log_file_path or os.path.join(self.server_profile.datadir, hostname + '.log')
                  request_save_profile = True
  
--            slow_query_log_file = opts[config_section].get('log-slow-queries', '').strip(' "') if opts.has_key(config_section) else ''
-+            slow_query_log_file = (opts[config_section].get('log-slow-queries', '') or opts[config_section].get('log_slow_queries', '')).strip(' "') if opts.has_key(config_section) else ''
+-            slow_query_log_file = opts[config_section].get('log-slow-queries', '').strip(' "') if config_section in opts else ''
++            slow_query_log_file = (opts[config_section].get('log-slow-queries', '') or opts[config_section].get('log-slow-queries', '').strip(' "')) if config_section in opts else ''
              slow_query_log_file = normpath(slow_query_log_file) if slow_query_log_file else ''
              if slow_query_log_file and self.server_profile.slow_log_file_path != slow_query_log_file:
                  self.server_profile.slow_log_file_path = slow_query_log_file or os.path.join(self.server_profile.datadir, hostname + '.slow')

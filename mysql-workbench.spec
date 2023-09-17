@@ -7,35 +7,31 @@
 #
 # Conditional build:
 %bcond_without	gnome_keyring	# build with gnome-keyring
-%bcond_without	unixodbc		# Use unixODBC instead of iODBC
-%bcond_with	system_antlr	# Use system antlr (All known publicly available versions of Antlr3C are buggy)
 
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	6.3.10
-Release:	5
+Version:	8.0.34
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 # Source0Download: http://dev.mysql.com/downloads/workbench/
-Source0:	http://cdn.mysql.com/Downloads/MySQLGUITools/%{name}-community-%{version}-src.tar.gz
-# Source0-md5:	565e52097c58a663d3498bb740eaefe5
-Source1:	http://www.antlr3.org/download/antlr-3.4-complete.jar
-# Source1-md5:	1b91dea1c7d480b3223f7c8a9aa0e172
+Source0:	https://dev.mysql.com/get/Downloads/MySQLGUITools/%{name}-community-%{version}-src.tar.gz
+# Source0-md5:	8718de577ba7242b85388fd06eea9f4c
+Source1:	http://www.antlr.org/download/antlr-4.11.1-complete.jar
+# Source1-md5:	3a8e221b166f90d13d70f5dd97941353
 Source2:	PLD_Linux_(MySQL_Package).xml
 Patch0:		pld-profile.patch
 Patch1:		log_slow_queries.patch
-Patch2:		bashism.patch
-Patch3:		wrapper-exec.patch
-Patch4:		antlr-res.patch
-Patch5:		mysql-version.patch
-Patch6:		ldconfig.patch
-Patch7:		format-string.patch
-Patch8:		types.patch
-Patch9:		glib2.patch
-Patch10:	no-Werror.patch
+Patch2:		wrapper-exec.patch
+Patch3:		antlr-res.patch
+Patch4:		mysql-version.patch
+Patch5:		ldconfig.patch
+Patch6:		types.patch
+Patch7:		stdint.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
+BuildRequires:	antlr4-cpp-runtime-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.9
 BuildRequires:	boost-devel
@@ -46,7 +42,6 @@ BuildRequires:	ctemplate-devel >= 2.3
 BuildRequires:	gdal-devel
 BuildRequires:	glib2-devel
 BuildRequires:	gtkmm3-devel
-%{?with_system_antlr:BuildRequires:	libantlr3c-devel >= 3.4}
 BuildRequires:	libgnome-keyring-devel
 %{?with_gnome_keyring:BuildRequires:	libgnome-keyring-devel}
 BuildRequires:	libsigc++-devel >= 2.0
@@ -61,7 +56,8 @@ BuildRequires:	/usr/bin/mysql_config
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel >= 1:2.6
+BuildRequires:	python3-devel >= 1:3.6
+BuildRequires:	rapidjson-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.658
@@ -69,18 +65,18 @@ BuildRequires:	sqlite3-devel
 BuildRequires:	swig
 BuildRequires:	swig-python
 BuildRequires:	tinyxml-devel
-%{?with_unixodbc:BuildRequires:	unixODBC-devel}
+BuildRequires:	unixODBC-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXext-devel
 Requires:	desktop-file-utils
-Requires:	python-paramiko
-Requires:	python-pexpect
-Requires:	python-sqlite
+Requires:	python3-paramiko
+Requires:	python3-pexpect
+#Requires:	python3-sqlite
 Requires:	shared-mime-info
 Requires:	xdg-utils
 Suggests:	gnome-keyring
 Suggests:	mysql-utilities
-Suggests:	python-pyodbc
+Suggests:	python3-pyodbc
 Suggests:	sudo
 Obsoletes:	mysql-administrator
 Obsoletes:	mysql-gui-tools
@@ -113,30 +109,35 @@ skomplikowanych migracji do MySQL-a.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
 cp -p '%{SOURCE2}' res/mysql.profiles
 
-%if %{with system_antlr}
-rm -r ext/antlr-runtime
-%else
 install -d linux-res/bin
 cp -p %{SOURCE1} linux-res/bin
-%endif
 
 # use System provided libraries
-#rm -r ext/scintilla
-#rm -r ext/HTMLRenderer
-#rm -r ext/Aga.Controls
+%{__rm} -r ext/Aga.Controls
+
+%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python(\s|$),#!%{__python3}\1,' -e '1s,#!\s*/usr/bin/env\s+python3(\s|$),#!%{__python3}\1,' \
+	ext/scintilla/gtk/DepGen.py \
+	ext/scintilla/qt/ScintillaEdit/WidgetGen.py \
+	ext/scintilla/scripts/Dependencies.py \
+	ext/scintilla/scripts/FileGenerator.py \
+	ext/scintilla/scripts/HFacer.py \
+	ext/scintilla/scripts/LexGen.py \
+	ext/scintilla/test/gi/filter-scintilla-h.py \
+	ext/scintilla/win32/DepGen.py \
+	res/scripts/python/mysqlwbmeb.py
 
 %build
-install -d build
-cd build
+install -d build-dir
+cd build-dir
 %cmake \
+	-DUSE_UNIXODBC=ON \
+	-DODBC_LIBRARIES="`%{_bindir}/odbc_config --libs`" \
+	-DODBC_INCLUDE_DIRS=%{_includedir} \
+	-DODBC_DEFINITIONS="`%{_bindir}/odbc_config --cflags`" \
 	-DLIB_INSTALL_DIR=%{_libdir} \
 	-DWB_INSTALL_DIR_EXECUTABLE=%{_libdir}/%{name} \
-	-DUSE_UNIXODBC=%{!?with_unixodbc:NO}%{?with_unixodbc:YES} \
 	-DMySQL_CONFIG_PATH=%{_bindir}/mysql_config \
 	..
 
@@ -144,19 +145,16 @@ cd build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} -C build install \
+%{__make} -C build-dir install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}-community
 
 # deprecated gnome-vfs install
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/mime-info/%{name}.mime
 
-%py_comp $RPM_BUILD_ROOT%{_libdir}/%{name}
-%py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
-# cleaning sshtunnel.py breaks ssh connections
-# cleaning the rest fails to import workbench.log
-%py_postclean -x sshtunnel.py %{_libdir}/%{name}
+%py3_comp $RPM_BUILD_ROOT%{_libdir}/%{name}
+%py3_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -167,7 +165,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README
+%doc ChangeLog README.md
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-bin
 %attr(755,root,root) %{_bindir}/wbcopytables
@@ -175,12 +173,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %dir %{_datadir}/%{name}
-%attr(755,root,root) %{_datadir}/%{name}/sshtunnel.py
+%{_datadir}/%{name}/__pycache__
 %attr(755,root,root) %{_datadir}/%{name}/mysqlwbmeb.py
 %{_datadir}/%{name}/*.glade
 %{_datadir}/%{name}/*.py.txt
-%{_datadir}/%{name}/*.py[co]
-#%%{_datadir}/%{name}/*.rc
 %{_datadir}/%{name}/*.css
 %{_datadir}/%{name}/*.vbs
 %{_datadir}/%{name}/data
@@ -197,7 +193,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/*.so*
 %dir %{_libdir}/%{name}/modules
-%{_libdir}/%{name}/modules/*.py*
+%{_libdir}/%{name}/modules/__pycache__
+%{_libdir}/%{name}/modules/*.py
 %attr(755,root,root) %{_libdir}/%{name}/modules/*.so*
 %dir %{_libdir}/%{name}/plugins
 %attr(755,root,root) %{_libdir}/%{name}/plugins/*.so*
