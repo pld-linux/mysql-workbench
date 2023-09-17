@@ -44,6 +44,7 @@ BuildRequires:	glib2-devel
 BuildRequires:	gtkmm3-devel
 BuildRequires:	libgnome-keyring-devel
 %{?with_gnome_keyring:BuildRequires:	libgnome-keyring-devel}
+BuildRequires:	libsecret-devel
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
