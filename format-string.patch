@@ -1,0 +1,83 @@
+--- mysql-workbench-community-8.0.34-src/library/ssh/SSHCommon.cpp.orig	2023-07-13 14:52:08.000000000 +0200
++++ mysql-workbench-community-8.0.34-src/library/ssh/SSHCommon.cpp	2023-09-18 16:53:07.116123139 +0200
+@@ -168,11 +168,16 @@
+ 
+   void SSHConnectionConfig::dumpConfig() const {
+     logDebug2("SSH Connection config info:\n");
+-    logDebug2("SSH bufferSize: %lu\n", bufferSize);
+-    logDebug2("SSH connectTimeout: %lu\n", connectTimeout);
+-    logDebug2("SSH readWriteTimeout: %lu\n", readWriteTimeout);
+-    logDebug2("SSH commandTimeout: %lu\n", commandTimeout);
+-    logDebug2("SSH commandRetryCount: %lu\n", commandRetryCount);
++#ifdef __LP64__
++#define __FORMAT "%lu"
++#else
++#define __FORMAT "%u"
++#endif
++    logDebug2("SSH bufferSize: " __FORMAT "\n", bufferSize);
++    logDebug2("SSH connectTimeout: " __FORMAT "\n", connectTimeout);
++    logDebug2("SSH readWriteTimeout: " __FORMAT "\n", readWriteTimeout);
++    logDebug2("SSH commandTimeout: " __FORMAT "\n", commandTimeout);
++    logDebug2("SSH commandRetryCount: " __FORMAT "\n", commandRetryCount);
+     logDebug2("SSH optionsDir: %s\n", optionsDir.c_str());
+     logDebug2("SSH known hosts file: %s\n", knownHostsFile.c_str());
+     logDebug2("SSH local host: %s\n", localhost.c_str());
+@@ -180,7 +185,7 @@
+     logDebug2("SSH remote host: %s\n", remotehost.c_str());
+     logDebug2("SSH remote port: %d\n", remoteport);
+     logDebug2("SSH remote ssh host: %s\n", remoteSSHhost.c_str());
+-    logDebug2("SSH remote ssh port: %lu\n", remoteSSHport);
++    logDebug2("SSH remote ssh port: " __FORMAT "\n", remoteSSHport);
+     logDebug2("SSH strict host key check: %s\n", strictHostKeyCheck ? "yes" : "no");
+   }
+ 
+--- mysql-workbench-community-8.0.34-src/library/ssh/SSHSession.cpp.orig	2023-07-13 14:52:08.000000000 +0200
++++ mysql-workbench-community-8.0.34-src/library/ssh/SSHSession.cpp	2023-09-18 16:55:47.953474994 +0200
+@@ -147,7 +147,12 @@
+     try {
+       _session->connect();
+     } catch (ssh::SshException &exc) {
+-      logError("Unable to connect: %s:%lu\nError was: %s\n", config.remoteSSHhost.c_str(), config.remoteSSHport,
++#ifdef __LP64__
++#define __FORMAT "%lu"
++#else
++#define __FORMAT "%u"
++#endif
++      logError("Unable to connect: %s:" __FORMAT "\nError was: %s\n", config.remoteSSHhost.c_str(), config.remoteSSHport,
+                exc.getError().c_str());
+       return std::make_tuple(SSHReturnType::CONNECTION_FAILURE, exc.getError());
+     }
+@@ -360,7 +365,7 @@
+       }
+     } while (true);
+ 
+-    logDebug3("Bytes read: %lu\n", bytesRead);
++    logDebug3("Bytes read: " __FORMAT "\n", bytesRead);
+     return std::make_tuple(so.str(), retError, channel->getExitStatus());
+   }
+ 
+@@ -479,7 +484,7 @@
+       }
+     } while (true);
+ 
+-    logDebug3("Bytes read: %lu\n", bytesRead);
++    logDebug3("Bytes read: " __FORMAT "\n", bytesRead);
+     return std::make_tuple(so.str(), retError, channel->getExitStatus());
+   }
+ 
+--- mysql-workbench-community-8.0.34-src/backend/wbprivate/sqlide/wb_sql_editor_form.cpp~	2023-07-13 14:52:08.000000000 +0200
++++ mysql-workbench-community-8.0.34-src/backend/wbprivate/sqlide/wb_sql_editor_form.cpp	2023-09-18 16:58:57.878187173 +0200
+@@ -2016,7 +2016,12 @@
+ 
+     bool results_left = false;
+     for (auto &statement_range : statement_ranges) {
+-      logDebug3("Executing statement range: %lu, %lu...\n", statement_range.first, statement_range.second);
++#ifdef __LP64__
++#define __FORMAT "%lu"
++#else
++#define __FORMAT "%u"
++#endif
++      logDebug3("Executing statement range: " __FORMAT ", " __FORMAT "...\n", statement_range.first, statement_range.second);
+ 
+       statement = sql->substr(statement_range.first, statement_range.second);
+       std::list<std::string> sub_statements;
