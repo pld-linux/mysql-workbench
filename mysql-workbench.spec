@@ -8,6 +8,9 @@
 # Conditional build:
 %bcond_without	gnome_keyring	# build with gnome-keyring
 
+# has been compiled by Java Runtime with class file version 55.0
+%define		min_jdk_version 11
+
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
