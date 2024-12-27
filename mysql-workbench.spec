@@ -31,6 +31,7 @@ Patch3:		antlr-res.patch
 Patch4:		mysql-version.patch
 Patch5:		ldconfig.patch
 Patch6:		types.patch
+Patch7:		std-distance-is-signed.patch
 Patch8:		format-string.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
@@ -46,6 +47,7 @@ BuildRequires:	gdal-devel
 BuildRequires:	glib2-devel
 BuildRequires:	gtkmm3-devel
 %buildrequires_jdk
+BuildRequires:	/usr/bin/mysql_config
 BuildRequires:	libgnome-keyring-devel
 %{?with_gnome_keyring:BuildRequires:	libgnome-keyring-devel}
 BuildRequires:	libsecret-devel
@@ -57,7 +59,6 @@ BuildRequires:	libxml2-devel
 BuildRequires:	libzip-devel
 BuildRequires:	lua51-devel
 BuildRequires:	mysql-connector-c++-devel >= 1.1.8
-BuildRequires:	/usr/bin/mysql_config
 BuildRequires:	pcre-cxx-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
@@ -106,14 +107,15 @@ skomplikowanych migracji do MySQL-a.
 
 %prep
 %setup -q -n %{name}-community-%{version}-src
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch8 -p1
+%patch -P 0 -p1
+%patch -P 1 -p1
+%patch -P 2 -p1
+%patch -P 3 -p1
+%patch -P 4 -p1
+%patch -P 5 -p1
+%patch -P 6 -p1
+%patch -P 7 -p1
+%patch -P 8 -p1
 cp -p '%{SOURCE2}' res/mysql.profiles
 
 install -d linux-res/bin

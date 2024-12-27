@@ -1,0 +1,19 @@
+--- mysql-workbench-community-8.0.40-src/library/grt/src/grtpp_shell.cpp.orig	2024-10-30 17:25:48.000000000 +0100
++++ mysql-workbench-community-8.0.40-src/library/grt/src/grtpp_shell.cpp	2024-12-27 23:34:39.473331983 +0100
+@@ -30,14 +30,14 @@
+ 
+ #define O_VECTOR_COUNT 64 // max # of ()*2+2
+ 
+-std::string get_value_from_text_ex(const std::string& txt, const std::string& regexpr, unsigned int substringNr) {
++std::string get_value_from_text_ex(const std::string& txt, const std::string& regexpr, int substringNr) {
+   std::regex regex(regexpr, std::regex::icase);
+   auto begin = std::sregex_iterator(txt.begin(), txt.end(), regex);
+   auto end = std::sregex_iterator();
+   if(std::distance(begin, end) >= substringNr)
+     return "";
+ 
+-  unsigned int idx = 0; 
++  int idx = 0;
+   for (std::sregex_iterator i = begin; i != end; ++i, ++idx) {
+     if (idx == substringNr) {
+       std::smatch match = *i;
