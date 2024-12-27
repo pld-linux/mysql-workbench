@@ -9,7 +9,8 @@
 %bcond_without	gnome_keyring	# build with gnome-keyring
 
 # has been compiled by Java Runtime with class file version 55.0
-%{?use_default_jdk:%use_default_jdk 11}
+%define		min_jdk_version	11
+%{?use_default_jdk:%use_default_jdk}
 
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
@@ -66,7 +67,7 @@ BuildRequires:	python3-devel >= 1:3.6
 BuildRequires:	rapidjson-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.658
+BuildRequires:	rpmbuild(macros) >= 2.021
 BuildRequires:	sqlite3-devel
 BuildRequires:	swig
 BuildRequires:	swig-python
@@ -139,6 +140,7 @@ cp -p %{SOURCE1} linux-res/bin
 install -d build-dir
 cd build-dir
 %cmake \
+	-DJAVA_HOME:PATH="%{java_home}" \
 	-DUSE_UNIXODBC=ON \
 	-DODBC_LIBRARIES="`%{_bindir}/odbc_config --libs`" \
 	-DODBC_INCLUDE_DIRS=%{_includedir} \
