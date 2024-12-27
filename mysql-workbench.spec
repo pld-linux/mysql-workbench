@@ -11,15 +11,15 @@
 Summary:	Extensible modeling tool for MySQL
 Summary(pl.UTF-8):	Narzędzie do modelowania baz danych dla MySQL-a
 Name:		mysql-workbench
-Version:	8.0.34
+Version:	8.0.40
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases
 # Source0Download: http://dev.mysql.com/downloads/workbench/
 Source0:	https://dev.mysql.com/get/Downloads/MySQLGUITools/%{name}-community-%{version}-src.tar.gz
-# Source0-md5:	8718de577ba7242b85388fd06eea9f4c
-Source1:	http://www.antlr.org/download/antlr-4.11.1-complete.jar
-# Source1-md5:	3a8e221b166f90d13d70f5dd97941353
+# Source0-md5:	9f93e8c7d37d073c48bbbf6f8d0e52f9
+Source1:	http://www.antlr.org/download/antlr-4.13.2-complete.jar
+# Source1-md5:	3c8bf23796901bbadaccf6e4c1f923e7
 Source2:	PLD_Linux_(MySQL_Package).xml
 Patch0:		pld-profile.patch
 Patch1:		log_slow_queries.patch
@@ -28,7 +28,6 @@ Patch3:		antlr-res.patch
 Patch4:		mysql-version.patch
 Patch5:		ldconfig.patch
 Patch6:		types.patch
-Patch7:		stdint.patch
 Patch8:		format-string.patch
 URL:		http://wb.mysql.com/
 BuildRequires:	OpenGL-devel
@@ -111,7 +110,6 @@ skomplikowanych migracji do MySQL-a.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 %patch8 -p1
 cp -p '%{SOURCE2}' res/mysql.profiles
 

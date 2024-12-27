@@ -3,7 +3,7 @@
 @@ -144,8 +144,7 @@
  check_function_exists (strtoumax HAVE_STRTOUMAX)
  
- set(ANTLR_JAR_FILENAME "antlr-4.11.1-complete.jar")
+ set(ANTLR_JAR_FILENAME "antlr-4.13.2-complete.jar")
 -get_filename_component(SOURCE_PARENT_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
 -set(LINUX_RES_BIN_DIR ${SOURCE_PARENT_DIR}/linux-res/bin)
 +set(LINUX_RES_BIN_DIR ${CMAKE_SOURCE_DIR}/linux-res/bin)
