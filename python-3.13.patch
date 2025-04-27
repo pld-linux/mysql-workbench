@@ -1,0 +1,99 @@
+--- mysql-workbench-community-8.0.42-src/library/grt/src/python_grtdict.cpp~	2025-04-14 17:21:34.000000000 +0200
++++ mysql-workbench-community-8.0.42-src/library/grt/src/python_grtdict.cpp	2025-04-27 15:32:53.393332804 +0200
+@@ -479,7 +479,11 @@
+   0,  //  tp_version_tag
+ 
+   0, //  tp_finalize
+-#if PY_VERSION_HEX >= 0x030c0000
++#if PY_VERSION_HEX >= 0x030d0000
++  nullptr, // tp_vectorcall
++  0,       // tp_watched
++  0        // tp_versions_used
++#elif PY_VERSION_HEX >= 0x030c0000
+   nullptr, // tp_vectorcall
+   0        // tp_watched
+ #elif PY_VERSION_HEX >= 0x03090000
+@@ -583,7 +587,11 @@
+   0,  //  tp_version_tag
+ 
+   0, //  tp_finalize
+-#if PY_VERSION_HEX >= 0x030c0000
++#if PY_VERSION_HEX >= 0x030d0000
++  nullptr, // tp_vectorcall
++  0,       // tp_watched
++  0        // tp_versions_used
++#elif PY_VERSION_HEX >= 0x030c0000
+   nullptr, // tp_vectorcall
+   0        // tp_watched
+ #elif PY_VERSION_HEX >= 0x03090000
+--- mysql-workbench-community-8.0.42-src/library/grt/src/python_grtlist.cpp~	2025-04-14 17:21:34.000000000 +0200
++++ mysql-workbench-community-8.0.42-src/library/grt/src/python_grtlist.cpp	2025-04-27 15:34:12.699999453 +0200
+@@ -426,7 +426,11 @@
+   /* Type attribute cache version tag. Added in version 2.6 */
+   0,  //  tp_version_tag
+   0, //  tp_finalize
+-#if PY_VERSION_HEX >= 0x030c0000
++#if PY_VERSION_HEX >= 0x030d0000
++  nullptr, // tp_vectorcall
++  0,       // tp_watched
++  0        // tp_versions_used
++#elif PY_VERSION_HEX >= 0x030c0000
+   nullptr, // tp_vectorcall
+   0        // tp_watched
+ #elif PY_VERSION_HEX >= 0x03090000
+--- mysql-workbench-community-8.0.42-src/library/grt/src/python_grtobject.cpp~	2025-04-14 17:21:34.000000000 +0200
++++ mysql-workbench-community-8.0.42-src/library/grt/src/python_grtobject.cpp	2025-04-27 15:35:49.823332753 +0200
+@@ -178,7 +178,11 @@
+   0,  //  tp_version_tag
+ 
+   0, //  tp_finalize
+-#if PY_VERSION_HEX >= 0x030c0000
++#if PY_VERSION_HEX >= 0x030d0000
++  nullptr, // tp_vectorcall
++  0,       // tp_watched
++  0        // tp_versions_used
++#elif PY_VERSION_HEX >= 0x030c0000
+   nullptr, // tp_vectorcall
+   0        // tp_watched
+ #elif PY_VERSION_HEX >= 0x03090000
+@@ -526,7 +530,11 @@
+   0,    //  tp_version_tag
+ 
+   0, //  tp_finalize
+-#if PY_VERSION_HEX >= 0x030c0000
++#if PY_VERSION_HEX >= 0x030d0000
++  nullptr, // tp_vectorcall
++  0,       // tp_watched
++  0        // tp_versions_used
++#elif PY_VERSION_HEX >= 0x030c0000
+   nullptr, // tp_vectorcall
+   0        // tp_watched
+ #elif PY_VERSION_HEX >= 0x03090000
+--- mysql-workbench-community-8.0.42-src/library/grt/src/python_module.cpp~	2025-04-14 17:21:34.000000000 +0200
++++ mysql-workbench-community-8.0.42-src/library/grt/src/python_module.cpp	2025-04-27 15:37:12.989999391 +0200
+@@ -197,7 +197,11 @@
+   0,  //  tp_version_tag
+ 
+   0, //  tp_finalize
+-#if PY_VERSION_HEX >= 0x030c0000
++#if PY_VERSION_HEX >= 0x030d0000
++  nullptr, // tp_vectorcall
++  0,       // tp_watched
++  0        // tp_versions_used
++#elif PY_VERSION_HEX >= 0x030c0000
+   nullptr, // tp_vectorcall
+   0        // tp_watched
+ #elif PY_VERSION_HEX >= 0x03090000
+@@ -387,7 +391,11 @@
+   0,  //  tp_version_tag
+ 
+   0, //  tp_finalize
+-#if PY_VERSION_HEX >= 0x030c0000
++#if PY_VERSION_HEX >= 0x030d0000
++  nullptr, // tp_vectorcall
++  0,       // tp_watched
++  0        // tp_versions_used
++#elif PY_VERSION_HEX >= 0x030c0000
+   nullptr, // tp_vectorcall
+   0        // tp_watched
+ #elif PY_VERSION_HEX >= 0x03090000
